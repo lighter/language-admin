@@ -1,0 +1,33 @@
+version: '2'
+services:
+    php:
+        build: ./php/
+        volumes:
+            - ./code:/var/www/html
+            - ./php/log/php_log:/var/log/php_log:rw
+        links:
+            - postgres
+        environment:
+            XDEBUG_CONFIG: "remote_host=10.254.254.254 idekey=gtiManageDocker remote_enable=1 remote_handler=dbgp remote_port=9000 remote_autostart=1 remote_connect_back=0 remote_log=/var/log/php_log/xdebug.log"
+            PHP_IDE_CONFIG: "serverName=language.develop.com"
+    postgres:
+        build: ./postgres/
+        environment:
+          - POSTGRES_PASSWORD=VwkDDxLhVp8VYLiwGwCVLTbL
+          - POSTGRES_USER=gti-manager-postgres
+          - POSTGRES_DB=gti
+          - SENTRY_DB=gti-sentry
+        ports:
+          - 5433:5432
+        restart: always
+    nginx:
+        build: ./nginx/
+        volumes:
+            - ./nginx/log:/var/log/nginx:rw
+        links:
+            - php:php
+        volumes_from:
+            - php
+        ports:
+            - 8888:80
+
