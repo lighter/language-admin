@@ -3,10 +3,11 @@ services:
     php:
         build: ./php/
         volumes:
-            - ./code:/var/www/html
+            - ./code/language:/var/www/html
             - ./php/log/php_log:/var/log/php_log:rw
         links:
             - postgres
+            - redis
         environment:
             XDEBUG_CONFIG: "remote_host=10.254.254.254 idekey=gtiManageDocker remote_enable=1 remote_handler=dbgp remote_port=9000 remote_autostart=1 remote_connect_back=0 remote_log=/var/log/php_log/xdebug.log"
             PHP_IDE_CONFIG: "serverName=language.develop.com"
@@ -14,9 +15,8 @@ services:
         build: ./postgres/
         environment:
           - POSTGRES_PASSWORD=VwkDDxLhVp8VYLiwGwCVLTbL
-          - POSTGRES_USER=gti-manager-postgres
-          - POSTGRES_DB=gti
-          - SENTRY_DB=gti-sentry
+          - POSTGRES_USER=language-manager-postgres
+          - POSTGRES_DB=language
         ports:
           - 5433:5432
         restart: always
@@ -30,4 +30,8 @@ services:
             - php
         ports:
             - 8888:80
-
+    redis:
+        build: ./redis/
+        ports:
+          - 7369:6379
+        restart: always
