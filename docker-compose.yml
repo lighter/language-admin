@@ -11,10 +11,11 @@ services:
         environment:
             XDEBUG_CONFIG: "remote_host=10.254.254.254 idekey=gtiManageDocker remote_enable=1 remote_handler=dbgp remote_port=9000 remote_autostart=1 remote_connect_back=0 remote_log=/var/log/php_log/xdebug.log"
             PHP_IDE_CONFIG: "serverName=language.develop.com"
+        restart: always
     postgres:
         build: ./postgres/
         environment:
-          - POSTGRES_PASSWORD=VwkDDxLhVp8VYLiwGwCVLTbL
+          - POSTGRES_PASSWORD=U2F77NbTyytwoCUVkpFmDs7TJDCkUnrPUMspDanAM2ywEFuZPszYEuwLyEvrvnJr
           - POSTGRES_USER=language-manager-postgres
           - POSTGRES_DB=language
         ports:
@@ -30,6 +31,7 @@ services:
             - php
         ports:
             - 8888:80
+        restart: always
     redis:
         build: ./redis/
         ports:

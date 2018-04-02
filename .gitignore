@@ -1,0 +1,5 @@
+/code/language/yarn.lock
+/nginx/log/*.log
+/php/log/php_log/xdebug.log
+/.idea
+/code/language/public
