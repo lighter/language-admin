@@ -3,3 +3,4 @@
 /php/log/php_log/xdebug.log
 /.idea
 /code/language/public
+.DS_Store
