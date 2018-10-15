@@ -44,4 +44,9 @@ class User extends Authenticatable
 
         return $this->api_token;
     }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)->withTimestamps();
+    }
 }

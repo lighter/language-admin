@@ -5,5 +5,11 @@ export default {
     }).then(response => {
       console.log(response);
     });
+  },
+
+  login(email, password) {
+    axios.post('api/login', { email, password }).then(response => {
+      console.log(response);
+    });
   }
 }

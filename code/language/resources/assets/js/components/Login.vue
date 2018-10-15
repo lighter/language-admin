@@ -11,16 +11,16 @@
                         <form>
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-large" type="email" placeholder="Your Email" autofocus="">
+                                    <input class="input is-large" type="email" placeholder="Your Email" autofocus="" v-model="email">
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-large" type="password" placeholder="Your Password">
+                                    <input class="input is-large" type="password" placeholder="Your Password" v-model="password">
                                 </div>
                             </div>
-                            <button class="button is-block is-info is-large is-fullwidth">Login</button>
+                            <button class="button is-block is-info is-large is-fullwidth" @click.prevent="login">Login</button>
                         </form>
                     </div>
                     <p class="has-text-grey">
@@ -35,8 +35,21 @@
 </template>
 
 <script>
+  import auth from './Auth/auth';
+
   export default {
-    name: "login"
+    name: "login",
+    data() {
+      return {
+        email: null,
+        password: null,
+      };
+    },
+    methods: {
+      login() {
+        auth.login(this.email, this.password)
+      }
+    }
   }
 </script>
 
