@@ -1,61 +1,82 @@
 <template>
-    <section class="hero is-success is-fullheight">
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <div class="column is-4 is-offset-4">
-                    <h3 class="title has-text-grey">Sign Up</h3>
-                    <div class="box">
-                        <figure class="avatar">
-                            <img src="https://placehold.it/128x128">
-                        </figure>
-                        <form>
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input is-large" type="text" placeholder="Name" autofocus=""
-                                           v-model="name">
-                                </div>
-                            </div>
+    <div>
+        <navbar>
+            <div class="navbar-item has-dropdown" v-bind:class="{ 'is-active': isActive }">
+                <a href="#" class="navbar-link" @click="showAccountDropDown">Account</a>
 
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input is-large" type="email" placeholder="Your Email" v-model="email">
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input is-large" type="password" placeholder="Your Password"
-                                           v-model="password">
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input is-large" type="password" placeholder="Confirm Your Password"
-                                           v-model="password_confirmation">
-                                </div>
-                            </div>
-
-                            <button class="button is-block is-info is-large is-fullwidth" @click.prevent="register">Sign
-                                Up
-                            </button>
-                        </form>
-                    </div>
-                    <p class="has-text-grey">
-                        <a href="../">Log In</a> &nbsp;·&nbsp;
-                        <a href="../">Forgot Password</a>
-                    </p>
+                <div class="navbar-dropdown">
+                    <router-link to="/" class="navbar-item">Home</router-link>
+                    <router-link to="/login" class="navbar-item">Login</router-link>
+                    <router-link to="/register" class="navbar-item">Register</router-link>
                 </div>
             </div>
-        </div>
-    </section>
+        </navbar>
+
+        <section class="hero is-success is-fullheight">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <div class="column is-4 is-offset-4">
+                        <h3 class="title has-text-grey">{{ $t('Sign_up') }}</h3>
+                        <div class="box">
+                            <figure class="avatar">
+                                <img src="https://placehold.it/128x128">
+                            </figure>
+                            <form>
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-large" type="text" :placeholder="$t('Name')" autofocus=""
+                                               v-model="name">
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-large" type="email" :placeholder="$t('Email_address')"
+                                               v-model="email">
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-large" type="password" :placeholder="$t('Password')"
+                                               v-model="password">
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-large" type="password"
+                                               :placeholder="$t('Confirm_password')"
+                                               v-model="password_confirmation">
+                                    </div>
+                                </div>
+
+                                <button class="button is-block is-info is-large is-fullwidth" @click.prevent="register">
+                                    {{ $t('Sign_up') }}
+                                </button>
+                            </form>
+                        </div>
+                        <p class="has-text-grey">
+                            <router-link to="$language/login">{{ $t('Sign_in') }}</router-link> &nbsp;·&nbsp;
+                            <a href="../">Forgot Password</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
 </template>
 
 <script>
   import auth from './Auth/auth';
+  import navbar from './layout/Navbar';
 
   export default {
     name: "register",
+    components: {
+      navbar
+    },
     data() {
       return {
         name: null,

@@ -1,44 +1,57 @@
 <template>
-    <section class="hero is-success is-fullheight">
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <div class="column is-4 is-offset-4">
-                    <h3 class="title has-text-grey">Login</h3>
-                    <div class="box">
-                        <figure class="avatar">
-                            <img src="https://placehold.it/128x128">
-                        </figure>
-                        <form>
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input is-large" type="email" placeholder="Your Email" autofocus="" v-model="email">
-                                </div>
-                            </div>
+    <div>
+        <navbar>
+            <LanguageSwitch></LanguageSwitch>
+        </navbar>
 
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input is-large" type="password" placeholder="Your Password" v-model="password">
+        <section class="hero is-success is-fullheight">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <div class="column is-4 is-offset-4">
+                        <h3 class="title has-text-grey">{{ $t('Sign_in') }}</h3>
+                        <div class="box">
+                            <figure class="avatar">
+                                <img src="https://placehold.it/128x128">
+                            </figure>
+                            <form>
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-large" type="email" :placeholder="$t('Email_address')" autofocus="" v-model="email">
+                                    </div>
                                 </div>
-                            </div>
-                            <button class="button is-block is-info is-large is-fullwidth" @click.prevent="login">Login</button>
-                        </form>
+
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-large" type="password" :placeholder="$t('Password')" v-model="password">
+                                    </div>
+                                </div>
+                                <button class="button is-block is-info is-large is-fullwidth" @click.prevent="login">{{ $t('Sign_in') }}</button>
+                            </form>
+                        </div>
+                        <p class="has-text-grey">
+                            <router-link to="$language/register">{{ $t('Sign_up') }}</router-link> &nbsp;·&nbsp;
+                            <a href="../">{{ $t('Forget_password') }}</a>
+                        </p>
                     </div>
-                    <p class="has-text-grey">
-                        <a href="../">Sign Up</a> &nbsp;·&nbsp;
-                        <a href="../">Forgot Password</a>
-                    </p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
+
 
 </template>
 
 <script>
   import auth from './Auth/auth';
+  import navbar from './layout/Navbar';
+  import LanguageSwitch from './layout/LanguageSwitch';
 
   export default {
     name: "login",
+    components: {
+      navbar,
+      LanguageSwitch
+    },
     data() {
       return {
         email: null,

@@ -6,20 +6,20 @@ import Home from './components/Home';
 import NotFound from './components/NotFound';
 
 const routes = [
-  { path: '/login', component: Login},
-  { path: '/register', component: Register},
-  { path: '/',
+  { path: '/:lang/login', component: Login},
+  { path: '/:lang/register', component: Register},
+  { path: '/:lang',
     component: Main,
     children: [
       {
         path: 'home',
         component: Home,
       }
-    ]
+    ],
   },
   { path: '*', component: NotFound },
 ];
 
 export default new VueRouter({
-  routes
+  routes,
 });
