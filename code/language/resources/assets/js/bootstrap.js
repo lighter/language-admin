@@ -4,8 +4,10 @@ window.Popper = require('popper.js').default;
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import AlertModal from './alertModal/plugin';
 window.Vue = Vue;
 Vue.use(VueRouter);
+Vue.use(AlertModal);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support

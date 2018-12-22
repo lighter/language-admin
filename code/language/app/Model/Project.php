@@ -9,6 +9,10 @@ class Project extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'name', 'public', 'language',
+    ];
+
     public function users()
     {
         return $this->belongsToMany(User::class)->withTimestamps();

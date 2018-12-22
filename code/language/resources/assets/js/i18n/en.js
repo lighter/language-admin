@@ -6,5 +6,14 @@ export default {
   "Sign_in": "Sign in",
   "Sign_up": "Sign up",
   "Forget_password": "Forget password",
-  "Account": "Account"
+  "Account": "Account",
+  "ProjectName": "Project name",
+  "Public": "Public",
+  "ProjectLanguage": "Project language",
+  "NonPublic": "Non public",
+  "Save": "Save",
+  "Cancel": "Cancel",
+  "Created_at": "Created at",
+  "Updated_at": "Updated at",
+  "Status": "Status"
 }

@@ -1,15 +1,27 @@
+import store from "../store";
+
 export default {
+
   register(context, name, email, password, password_confirmation) {
-    axios.post('api/register', {
+    return axios.post('api/register', {
       name, email, password, password_confirmation
     }).then(response => {
-      console.log(response);
+      store.commit('loginUser');
     });
   },
 
   login(email, password) {
-    axios.post('api/login', { email, password }).then(response => {
-      console.log(response);
-    });
+    return axios.post('api/login', { email, password })
+      .then(response => {
+
+        if ('data' in response.data) {
+          store.commit('loginUser');
+          localStorage.setItem('token', response.data.data.api_token);
+          return true;
+        }
+      })
+      .catch(function (error) {
+        return false;
+      });
   }
 }

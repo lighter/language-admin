@@ -1,30 +1,28 @@
 <template>
     <div>
-        <navbar>
-            <div class="navbar-item has-dropdown" v-bind:class="{ 'is-active': isActive }">
-                <a href="#" class="navbar-link" @click="showAccountDropDown">{{ $t('Account') }}</a>
+        <Navbar>
+            <LanguageSwitch></LanguageSwitch>
 
-                <div class="navbar-dropdown">
+            <div class="navbar-item has-dropdown" v-bind:class="{ 'is-active': isActive }" @mouseover="showAccountDropDown" @mouseout="hiddenAccountDropDown">
+                <a href="#" class="navbar-link">{{ $t('Account') }}</a>
+
+                <div class="navbar-dropdown" v-if="!loginStatus">
                     <router-link to="/" class="navbar-item">Home</router-link>
                     <router-link to="$language/login" class="navbar-item">Login</router-link>
                     <router-link to="$language/register" class="navbar-item">Register</router-link>
                 </div>
+
+                <div class="navbar-dropdown" v-else>
+                    <router-link to="/logout" class="navbar-item">Logout</router-link>
+                </div>
+
             </div>
-        </navbar>
+        </Navbar>
 
         <div class="container">
             <div class="columns is-desktop is-gapless">
-                <div class="column is-3">
-                    <aside class="menu">
-                        <p class="menu-label">
-                            General
-                        </p>
-                        <ul class="menu-list">
-                            <li><a>Dashboard</a></li>
-                            <li><a>Customers</a></li>
-                        </ul>
-                    </aside>
-                </div>
+                <Menu></Menu>
+
                 <div class="column is-9">
                     <router-view></router-view>
                 </div>
@@ -35,20 +33,29 @@
 </template>
 
 <script>
-  import navbar from './Navbar';
+  import Navbar from './Navbar';
+  import Menu from './Menu';
+  import LanguageSwitch from './LanguageSwitch';
+  import store from '../store';
 
   export default {
     components: {
-      navbar
+      Navbar,
+      Menu,
+      LanguageSwitch
     },
     data() {
       return {
-        isActive: false
+        isActive: false,
+        loginStatus: store.state.isLoggedIn
       };
     },
     methods: {
       showAccountDropDown: function () {
-        this.isActive = !this.isActive;
+        this.isActive = true;
+      },
+      hiddenAccountDropDown: function () {
+        this.isActive = false;
       }
     }
   }

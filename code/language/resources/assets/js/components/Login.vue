@@ -1,8 +1,8 @@
 <template>
     <div>
-        <navbar>
+        <Navbar>
             <LanguageSwitch></LanguageSwitch>
-        </navbar>
+        </Navbar>
 
         <section class="hero is-success is-fullheight">
             <div class="hero-body">
@@ -38,18 +38,17 @@
         </section>
     </div>
 
-
 </template>
 
 <script>
   import auth from './Auth/auth';
-  import navbar from './layout/Navbar';
+  import Navbar from './layout/Navbar';
   import LanguageSwitch from './layout/LanguageSwitch';
 
   export default {
     name: "login",
     components: {
-      navbar,
+      Navbar,
       LanguageSwitch
     },
     data() {
@@ -60,7 +59,16 @@
     },
     methods: {
       login() {
-        auth.login(this.email, this.password)
+
+        let params = {
+          content: 'Login failed',
+        }
+
+        auth.login(this.email, this.password).then(status => {
+          if (status) this.$router.push({ name: 'project_list', params: this.$language })
+          else this.$alertmodal.show(params)
+        });
+
       }
     }
   }

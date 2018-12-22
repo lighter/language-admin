@@ -1,5 +1,6 @@
 <template>
     <nav class="navbar has-shadow">
+        <app-modal></app-modal>
         <div class="container">
             <div class="navbar-brand">
                 <a class="navbar-item" href="#">
@@ -17,7 +18,7 @@
 
 <script>
   export default {
-    name: "navbar"
+    name: "Navbar"
   }
 </script>
 
