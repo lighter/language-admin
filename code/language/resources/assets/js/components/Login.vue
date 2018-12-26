@@ -1,5 +1,6 @@
 <template>
     <div>
+        <app-loading></app-loading>
         <Navbar>
             <LanguageSwitch></LanguageSwitch>
         </Navbar>
