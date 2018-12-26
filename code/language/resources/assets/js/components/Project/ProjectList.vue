@@ -50,5 +50,7 @@
 </script>
 
 <style scoped>
-
+    #div-user-projects {
+        margin-top: 10px;
+    }
 </style>

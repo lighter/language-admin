@@ -15,5 +15,7 @@ export default {
   "Cancel": "取消",
   "Created_at": "建立時間",
   "Updated_at": "最後修改時間",
-  "Status": "狀態"
+  "Status": "狀態",
+  "ProjectCreate": "建立新專案",
+  "ProjectList": "專案清單",
 }

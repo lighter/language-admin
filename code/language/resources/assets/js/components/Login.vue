@@ -30,7 +30,7 @@
                             </form>
                         </div>
                         <p class="has-text-grey">
-                            <router-link to="$language/register">{{ $t('Sign_up') }}</router-link> &nbsp;·&nbsp;
+                            <router-link to="register">{{ $t('Sign_up') }}</router-link> &nbsp;·&nbsp;
                             <a href="../">{{ $t('Forget_password') }}</a>
                         </p>
                     </div>
@@ -63,10 +63,10 @@
 
         let params = {
           content: 'Login failed',
-        }
+        };
 
         auth.login(this.email, this.password).then(status => {
-          if (status) this.$router.push({ name: 'project_list', params: this.$language })
+          if (status) this.$router.push({ name: 'project_list', params: this.$i18n.locale })
           else this.$alertmodal.show(params)
         });
 

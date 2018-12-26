@@ -8,9 +8,9 @@
   export default {
     name: "Logout",
     mounted() {
-        localStorage.removeItem('token');
-        store.commit('logoutUser');
-        this.$route.push({name: 'login', params: this.$language });
+      localStorage.removeItem('token');
+      store.commit('logoutUser');
+      this.$router.push({name: 'login', params: this.$i18n.locale });
     }
   }
 </script>

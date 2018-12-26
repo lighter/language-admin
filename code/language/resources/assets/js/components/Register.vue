@@ -1,16 +1,9 @@
 <template>
     <div>
-        <navbar>
-            <div class="navbar-item has-dropdown" v-bind:class="{ 'is-active': isActive }">
-                <a href="#" class="navbar-link" @click="showAccountDropDown">Account</a>
-
-                <div class="navbar-dropdown">
-                    <router-link to="/" class="navbar-item">Home</router-link>
-                    <router-link to="/login" class="navbar-item">Login</router-link>
-                    <router-link to="/register" class="navbar-item">Register</router-link>
-                </div>
-            </div>
-        </navbar>
+        <app-loading></app-loading>
+        <Navbar>
+            <LanguageSwitch></LanguageSwitch>
+        </Navbar>
 
         <section class="hero is-success is-fullheight">
             <div class="hero-body">
@@ -57,7 +50,7 @@
                             </form>
                         </div>
                         <p class="has-text-grey">
-                            <router-link to="$language/login">{{ $t('Sign_in') }}</router-link> &nbsp;·&nbsp;
+                            <router-link to="login">{{ $t('Sign_in') }}</router-link> &nbsp;·&nbsp;
                             <a href="../">Forgot Password</a>
                         </p>
                     </div>
@@ -70,12 +63,14 @@
 
 <script>
   import auth from './Auth/auth';
-  import navbar from './layout/Navbar';
+  import Navbar from './layout/Navbar';
+  import LanguageSwitch from './layout/LanguageSwitch';
 
   export default {
     name: "register",
     components: {
-      navbar
+      Navbar,
+      LanguageSwitch,
     },
     data() {
       return {
@@ -90,7 +85,11 @@
     },
     methods: {
       register() {
-        auth.register(this, this.name, this.email, this.password, this.password_confirmation);
+        auth.register(this, this.name, this.email, this.password, this.password_confirmation)
+          .then(status => {
+            if (status) this.$router.push({ name: 'project_list', params: this.$i18n.locale })
+            else console.log(status);
+          });
       }
     }
   }

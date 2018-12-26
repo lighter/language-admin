@@ -15,5 +15,7 @@ export default {
   "Cancel": "Cancel",
   "Created_at": "Created at",
   "Updated_at": "Updated at",
-  "Status": "Status"
+  "Status": "Status",
+  "ProjectCreate": "New project",
+  "ProjectList": "Project list",
 }

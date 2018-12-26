@@ -26,9 +26,8 @@
     },
     methods: {
       onChange() {
-        this.$language = this.$i18n.locale;
         this.$router.push({
-          params: { lang: this.$language }
+          params: { lang: this.$i18n.locale }
         });
       }
     }

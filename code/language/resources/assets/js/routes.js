@@ -12,7 +12,7 @@ import store from "./components/store";
 
 
 const routes = [
-  { path: '/logout', component: Logout, name: 'logout'},
+  { path: '/:lang/logout', component: Logout, name: 'logout'},
   { path: '/:lang/login', component: Login, name: 'login'},
   { path: '/:lang/register', component: Register, name: 'register'},
   { path: '/:lang',
