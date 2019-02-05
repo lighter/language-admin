@@ -1,6 +1,6 @@
 <template>
-    <div id="div-user-projects">
-        <table id="table-user-projects" class="table is-striped table is-fullwidth">
+    <div id="div-user-projects" class="div-table-list">
+        <table id="table-user-projects" class="table is-striped is-fullwidth">
             <thead>
             <tr>
                 <th>{{ $t('ProjectName') }}</th>
@@ -8,6 +8,7 @@
                 <th>{{ $t('Status') }}</th>
                 <th>{{ $t('Created_at') }}</th>
                 <th>{{ $t('Updated_at') }}</th>
+                <th>{{ $t('Operator')}}</th>
             </tr>
             </thead>
 
@@ -18,6 +19,10 @@
                 <td>{{ project.public ? $t('Public') : $t('NonPublic') }}</td>
                 <td>{{ project.created_at }}</td>
                 <td>{{ project.updated_at }}</td>
+                <td>
+                    <router-link :to="{path: `/${$i18n.locale}/project/${project.id}/edit`}" class="button is-light">{{ $t('Modify') }}</router-link>
+                    <router-link :to="{path: `/${$i18n.locale}/language/${project.id}`}" class="button is-light">{{ $t('Language') }}</router-link>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -38,19 +43,16 @@
       getUserProjects() {
         http.get('api/user_projects')
           .then((response) => {
-            console.log(response.data.data);
             this.userProjects = response.data.data;
           });
       }
     },
     beforeMount() {
-      this.getUserProjects()
+      this.getUserProjects();
     },
   }
 </script>
 
 <style scoped>
-    #div-user-projects {
-        margin-top: 10px;
-    }
+
 </style>

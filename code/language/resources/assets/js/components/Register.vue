@@ -86,9 +86,9 @@
     methods: {
       register() {
         auth.register(this, this.name, this.email, this.password, this.password_confirmation)
-          .then(status => {
-            if (status) this.$router.push({ name: 'project_list', params: this.$i18n.locale })
-            else console.log(status);
+          .then(data => {
+            if (data.status) this.$router.push({ name: 'project_list', params: this.$i18n.locale })
+            else this.$alertmodal.showErrorMessage(data.errors);
           });
       }
     }

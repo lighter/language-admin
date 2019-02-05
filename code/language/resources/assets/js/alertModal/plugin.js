@@ -20,6 +20,10 @@ const AlertModal = {
         // if we use this.$modal.show(params) inside our original Vue instance
         // we will emit 'show' event with parameters 'params'
         AlertModal.EventBus.$emit('show', params);
+      },
+
+      showErrorMessage(errors) {
+        AlertModal.EventBus.$emit('showErrorMessage', errors);
       }
     }
   }

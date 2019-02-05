@@ -28,7 +28,7 @@ class ProjectRepository
      *
      * @return Project
      */
-    public function createProject(array $data): Project
+    public function createProject(array $data)
     {
         try {
             return $this->model->create($data);
@@ -42,10 +42,10 @@ class ProjectRepository
      *
      * @return Project
      */
-    public function findProject($id): Project
+    public function findProject($id)
     {
         try {
-            return $this->model->find($id);
+            return $this->model->where('id', $id);
         } catch (QueryException $e) {
 
         }
@@ -57,16 +57,33 @@ class ProjectRepository
      *
      * @return Project
      */
-    public function updateProject($request, $id): Project
+    public function updateProject($request, $id)
     {
         try {
-            $project = $this->model->find($id);
+            $project = $this->model->where('id', $id);
 
             $project->name = $request->get('name');
+            $project->public = $request->get('public');
+            $project->language = $request->get('language');
 
             $project->save();
 
-            return $project;
+            return [
+              'status' => true,
+              'data' => $project,
+            ];
+        } catch (QueryException $e) {
+            return [
+                'status' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
+    }
+
+    public function getProjectLanguages($id)
+    {
+        try {
+            return $this->model->where('id', $id)->languages()->get();
         } catch (QueryException $e) {
 
         }

@@ -3,8 +3,16 @@
     <div class="modal" v-bind:class="{ 'is-active': showModal }">
         <div class="modal-background" @click="close"></div>
         <div class="modal-content">
-            <div class="box">
+            <div class="box" v-if="showText">
                 {{ content }}
+            </div>
+
+            <div class="box" v-if="!showText">
+                <ul>
+                    <li v-for="(errorMessages, column) in errors">
+                        {{ column }} : {{ errorMessages.toString() }}
+                    </li>
+                </ul>
             </div>
         </div>
         <button class="modal-close is-large" aria-label="close" @click="close"></button>
@@ -20,7 +28,9 @@
     data() {
       return {
         content: '',
-        showModal: false
+        showModal: false,
+        showText: true,
+        errors: null,
       }
     },
     methods: {
@@ -30,6 +40,11 @@
       show(params) {
         this.content = params.content
         this.showModal = true;
+      },
+      showErrorMessage(errors) {
+        this.showModal = true;
+        this.errors = errors;
+        this.showText = false;
       }
     },
     mounted: function () {
@@ -44,6 +59,10 @@
       // we declared those events inside our plugin
       AlertModal.EventBus.$on('show', (params) => {
         this.show(params);
+      });
+
+      AlertModal.EventBus.$on('showErrorMessage', (errors) => {
+        this.showErrorMessage(errors);
       });
     }
   }

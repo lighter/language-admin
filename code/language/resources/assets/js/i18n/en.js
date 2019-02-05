@@ -1,5 +1,6 @@
 export default {
   "Email_address": "Email address",
+  "Email": "Email",
   "Name": "Name",
   "Password": "Password",
   "Confirm_password": "Confirm password",
@@ -18,4 +19,10 @@ export default {
   "Status": "Status",
   "ProjectCreate": "New project",
   "ProjectList": "Project list",
+  "Update": "Update",
+  "Operator": "Operator",
+  "Modify": "Modify",
+  "Language": "Language",
+  "Delete": "Delete",
+  "New": "New",
 }

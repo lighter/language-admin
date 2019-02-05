@@ -23,7 +23,11 @@
         type: Array,
       }
     },
-
+    watch: {
+      selectedLanguage: function (val) {
+        this.sl = this.selectedLanguage = val;
+      }
+    }
   }
 </script>
 

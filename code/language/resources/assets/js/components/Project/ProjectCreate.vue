@@ -1,5 +1,5 @@
 <template>
-    <div class="column is-6">
+    <div class="column is-7">
         <div class="field is-horizontal">
             <div class="field-label is-normal">
                 <label class="label">{{ $t('ProjectName') }}</label>
@@ -73,6 +73,7 @@
 <script>
 
   import LanguageList from '../layout/LanguageList';
+  import http from '../../http';
 
   export default {
     name: "ProjectCreate",
@@ -89,16 +90,25 @@
     },
     methods: {
       createProject() {
-        axios.post('api/project', {
+
+        let createSuccessParams = {
+          content: 'Create Success',
+        };
+
+        let createFailParams = {
+          content: 'Create Fail',
+        };
+
+        http.post('api/project', {
           name: this.name,
           public: this.public,
           language: this.selectedLanguage
         }).then((response) => {
-          console.log(response);
+          if (response.data.data.status) this.$alertmodal.show(createSuccessParams);
+          else this.$alertmodal.show(createFailParams);
         });
       },
       changeSelectedLanguage(value) {
-        console.log(value);
         this.selectedLanguage = value;
       }
     }

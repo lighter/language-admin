@@ -8,12 +8,12 @@ export default {
         if ('data' in response.data) {
           store.commit('loginUser');
           localStorage.setItem('token', response.data.data.api_token);
-          return true;
+          return {status: true};
         }
       })
       .catch(function (error) {
         console.log(error.response);
-        return false;
+        return {status: false, errors: error.response.data.errors};
       });
   },
 

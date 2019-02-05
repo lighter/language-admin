@@ -5,6 +5,13 @@ import Register from './components/Register';
 import Home from './components/Home';
 import ProjectCreate from './components/Project/ProjectCreate';
 import ProjectList from './components/Project/ProjectList';
+import ProjectEdit from './components/Project/ProjectEdit';
+
+import LanguageList from './components/Language/LanguageList';
+
+import UserList from './components/User/UserList';
+import UserEdit from './components/User/UserEdit';
+
 import NotFound from './components/NotFound';
 import Logout from './components/Logout';
 import {i18n} from "./i18n";
@@ -18,9 +25,20 @@ const routes = [
   { path: '/:lang',
     component: Main,
     children: [
-      { path: 'home', component: Home, name: 'home'},
-      { path: 'project', component: ProjectList, name: 'project_list'},
-      { path: 'project/create', component: ProjectCreate, name: 'project_create'},
+      { path: 'home', component: Home, name: 'home' },
+
+      // project
+      { path: 'project', component: ProjectList, name: 'project_list' },
+      { path: 'project/create', component: ProjectCreate, name: 'project_create' },
+      { path: 'project/:id/edit', component: ProjectEdit, name: 'project_edit' },
+
+      // user
+      { path: 'user', component: UserList, name: 'user_list' },
+      { path: 'user/:id/edit', component: UserEdit, name: 'user_edit' },
+
+      // language
+      { path: 'language/:id', component: LanguageList, name: 'language_list' },
+
     ],
     meta: { requiresAuth: true }
   },

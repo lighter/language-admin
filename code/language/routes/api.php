@@ -23,5 +23,12 @@ Route::post('logout', 'Auth\LoginController@logout');
 
 Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('project', 'ProjectController');
+    Route::get('user_project_languages/{projectId}', 'ProjectController@getProjectLanguages');
+
     Route::get('user_projects', 'UserController@getUserProjects');
+    Route::get('users', 'UserController@getUsers');
+    Route::get('users/{id}', 'UserController@getUser');
+    Route::put('users/{id}', 'UserController@updateUser');
+
+    Route::resource('language', 'LanguageController', ['only' => ['store', 'update', 'destroy']]);
 });
