@@ -1,4 +1,5 @@
 import store from "../store";
+import {setCookie} from '../../util/cookie';
 
 export default {
 
@@ -7,7 +8,12 @@ export default {
       .then(response => {
         if ('data' in response.data) {
           store.commit('loginUser');
-          localStorage.setItem('token', response.data.data.api_token);
+
+          //localStorage.setItem('token', response.data.data.api_token);
+
+          let expiredays = 1;
+          setCookie('token', response.data.data.api_token, expiredays);
+
           return {status: true};
         }
       })
@@ -23,7 +29,12 @@ export default {
 
         if ('data' in response.data) {
           store.commit('loginUser');
-          localStorage.setItem('token', response.data.data.api_token);
+
+          // localStorage.setItem('token', response.data.data.api_token);
+
+          let expiredays = 1;
+          setCookie('token', response.data.data.api_token, expiredays);
+
           return true;
         }
       })

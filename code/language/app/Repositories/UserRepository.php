@@ -43,7 +43,7 @@ class UserRepository
     public function getUserProjects($userId)
     {
         try {
-            return $this->model->where('id', $userId)->projects()->get();
+            return $this->model->where('id', $userId)->first()->projects()->get();
         } catch (QueryException $e) {
 
         }
@@ -58,7 +58,7 @@ class UserRepository
     public function getUserProject($userId, $projectId)
     {
         try {
-            return $this->model->where('id', $userId)->projects->filter(function ($projects) use ($projectId) {
+            return $this->model->where('id', $userId)->first()->projects->filter(function ($projects) use ($projectId) {
                 return $projects->id == $projectId;
             })->first();
         } catch (QueryException $e) {
@@ -87,7 +87,7 @@ class UserRepository
     public function getUserProjectLanguage($userId, $projectId)
     {
         try {
-            return $this->model->where('id', $userId)
+            return $this->model->where('id', $userId)->first()
                 ->projects->where('id', $projectId)->first()
                 ->languages;
         } catch (QueryException $e) {
