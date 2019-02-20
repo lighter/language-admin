@@ -5,24 +5,16 @@
                 <a class="pagination-link" aria-label="Goto page 1">{{ this.firstPageStr }}</a>
             </li>
 
-            <!--<li>-->
-            <!--<a class="pagination-link" aria-label="Goto page 45">45</a>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<a class="pagination-link" aria-label="Goto page 47">47</a>-->
-            <!--</li>-->
-
-
             <li v-for="index in this.allPages">
-                <a class="pagination-link" :class="{ 'is-current': (index === this.current_page) }">{{ index
-                    }}</a>
+                <a class="pagination-link"
+                   :class="{ 'is-current': (index === current_page) }"
+                   :aria-current="aria_current(index)">
+                    {{ index }}
+                </a>
             </li>
 
             <li>
-                <a class="pagination-link" aria-label="Goto page 86">{{ this.lastPageStr }}</a>
+                <a class="pagination-link" :aria-label="aria_label">{{ this.lastPageStr }}</a>
             </li>
         </ul>
     </nav>
@@ -34,8 +26,6 @@
     data() {
       return {
         allPages: [],
-        current_page: this.paginationData.current_page,
-        last_page: this.paginationData.last_page
       }
     },
     props: {
@@ -84,14 +74,26 @@
         }
 
         return all_page;
+      },
+      aria_current: function (index) {
+        return index === this.paginationData.current_page ? 'page' : '';
       }
+    },
+    computed: {
+      current_page: function () {
+        return this.paginationData.current_page;
+      },
+      last_page: function () {
+        return this.paginationData.last_page;
+      },
+      aria_label: function () {
+        return `Goto page ${this.paginationData.last_page}`;
+      },
     },
     watch: {
       paginationData: function (val) {
         this.paginationData = val;
         this.allPages = this.getPagination();
-        this.current_page = this.paginationData.current_page;
-        this.last_page = this.paginationData.last_page;
       }
     }
   }
