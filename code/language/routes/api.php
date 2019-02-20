@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth:api']], function() {
 
     Route::get('user_projects', 'UserController@getUserProjects');
     Route::get('users', 'UserController@getUsers');
+    Route::get('users_page', 'UserController@getUsersPagination');
     Route::get('users/{id}', 'UserController@getUser');
     Route::put('users/{id}', 'UserController@updateUser');
 

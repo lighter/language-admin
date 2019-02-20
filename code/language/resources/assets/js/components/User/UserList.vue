@@ -18,33 +18,44 @@
                 <td>{{ user.created_at}}</td>
                 <td>{{ user.updated_at}}</td>
                 <td>
-                    <router-link :to="{path: `/${$i18n.locale}/user/${user.id}/edit`}" class="button is-light">{{ $t('Modify') }}</router-link>
+                    <router-link :to="{path: `/${$i18n.locale}/user/${user.id}/edit`}" class="button is-light">{{
+                        $t('Modify') }}
+                    </router-link>
                 </td>
             </tr>
             </tbody>
         </table>
+
+        <Pagination :pagination-data="pagination" :last-page-str="$t('LastPage')" :first-page-str="$t('FirstPage')" ></Pagination>
+
     </div>
 </template>
 
 <script>
   import http from '../../http';
+  import Pagination from '../../Pagination/Pagination';
 
   export default {
     name: "UserList",
+    components: {
+      Pagination,
+    },
     data() {
       return {
-        users: []
+        users: [],
+        pagination: {},
       }
     },
     methods: {
       getUsers() {
-        http.get('api/users')
+        http.get('api/users_page')
           .then((response) => {
-            this.users = response.data.data
+            this.users = response.data.data;
+            this.pagination = response.data.pagination;
           });
       }
     },
-    beforeMount() {
+    mounted() {
       this.getUsers();
     },
   }

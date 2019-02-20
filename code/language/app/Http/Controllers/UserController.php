@@ -52,6 +52,25 @@ class UserController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUsersPagination(Request $request)
+    {
+        $pageSize = $request->get('pageSize', 10);
+        $page = $request->get('page', 1);
+
+        $usersPagination = $this->userRepository->getUsersPagination($pageSize, $page);
+
+//        return response()->json(['data' => $usersPagination->toArray()], Response::HTTP_OK);
+
+        [$users, $pagination] = $this->getPaginationData($usersPagination);
+
+        return response()->json(['data' => $users, 'pagination' => $pagination], Response::HTTP_OK);
+    }
+
+    /**
      * @param $userId
      *
      * @return \Illuminate\Http\JsonResponse

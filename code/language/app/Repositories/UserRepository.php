@@ -79,6 +79,21 @@ class UserRepository
     }
 
     /**
+     * @param int $pageSize
+     * @param int $page
+     *
+     * @return mixed
+     */
+    public function getUsersPagination($pageSize = 10, $page = 1)
+    {
+        try {
+            return $this->model->paginate($pageSize, ['*'], 'page', $page);
+        } catch (QueryException $e) {
+
+        }
+    }
+
+    /**
      * @param $userId
      * @param $projectId
      *

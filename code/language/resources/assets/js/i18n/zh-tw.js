@@ -25,4 +25,6 @@ export default {
   "Language": "語系",
   "Delete": "刪除",
   "New": "新增",
+  "FirstPage": "首頁",
+  "LastPage": "末頁",
 }

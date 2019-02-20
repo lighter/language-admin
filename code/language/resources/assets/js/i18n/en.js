@@ -25,4 +25,6 @@ export default {
   "Language": "Language",
   "Delete": "Delete",
   "New": "New",
+  "FirstPage": "First Page",
+  "LastPage": "Last Page",
 }

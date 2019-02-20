@@ -20,6 +20,9 @@ Vue.use(Loading);
 try {
   window.$ = window.jQuery = require('jquery');
 
+  // lodash
+  Vue.prototype._ = _;
+
   require('bootstrap');
 } catch (e) {
 }
