@@ -2,19 +2,20 @@
     <nav class="pagination" role="navigation" aria-label="pagination">
         <ul class="pagination-list">
             <li>
-                <a class="pagination-link" aria-label="Goto page 1">{{ this.firstPageStr }}</a>
+                <a class="pagination-link" aria-label="Goto page 1" @click.prevent="goTo(1)">{{ this.firstPageStr }}</a>
             </li>
 
             <li v-for="index in this.allPages">
                 <a class="pagination-link"
-                   :class="{ 'is-current': (index === current_page) }"
-                   :aria-current="aria_current(index)">
+                   :class="{ 'is-current': (index == current_page) }"
+                   :aria-current="aria_current(index)"
+                   @click.prevent="goTo(index)">
                     {{ index }}
                 </a>
             </li>
 
             <li>
-                <a class="pagination-link" :aria-label="aria_label">{{ this.lastPageStr }}</a>
+                <a class="pagination-link" :aria-label="aria_label" @click.prevent="goTo(last_page)">{{ this.lastPageStr }}</a>
             </li>
         </ul>
     </nav>
@@ -77,6 +78,9 @@
       },
       aria_current: function (index) {
         return index === this.paginationData.current_page ? 'page' : '';
+      },
+      goTo: function (index) {
+        this.$parent.$emit('goToPage', index);
       }
     },
     computed: {

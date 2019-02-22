@@ -58,7 +58,7 @@ class UserController extends Controller
      */
     public function getUsersPagination(Request $request)
     {
-        $pageSize = $request->get('pageSize', 2);
+        $pageSize = $request->get('pageSize', 10);
         $page = $request->get('page', 1);
 
         $usersPagination = $this->userRepository->getUsersPagination($pageSize, $page);

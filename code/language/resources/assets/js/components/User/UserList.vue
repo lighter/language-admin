@@ -26,7 +26,9 @@
             </tbody>
         </table>
 
-        <Pagination :pagination-data="pagination" :last-page-str="$t('LastPage')" :first-page-str="$t('FirstPage')" ></Pagination>
+        <Pagination :pagination-data="pagination"
+                    :last-page-str="$t('LastPage')"
+                    :first-page-str="$t('FirstPage')"></Pagination>
 
     </div>
 </template>
@@ -47,13 +49,20 @@
       }
     },
     methods: {
-      getUsers() {
-        http.get('api/users_page')
+      getUsers(page = 1, pageSize = 10) {
+        let url = `api/users_page?page=${page}`;
+
+        http.get(url)
           .then((response) => {
             this.users = response.data.data;
             this.pagination = response.data.pagination;
           });
       }
+    },
+    created() {
+      this.$on('goToPage', (page, pageSize) => {
+        this.getUsers(page, pageSize);
+      });
     },
     mounted() {
       this.getUsers();
