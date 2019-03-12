@@ -3,17 +3,10 @@ import {setCookie} from '../../util/cookie';
 
 export default {
 
-  register(context, name, email, password, password_confirmation) {
-    return axios.post('api/register', { name, email, password, password_confirmation })
+  register(context, name, email, password, password_confirmation, lang) {
+    return axios.post('api/register', { name, email, password, password_confirmation, lang })
       .then(response => {
         if ('data' in response.data) {
-          store.commit('loginUser');
-
-          //localStorage.setItem('token', response.data.data.api_token);
-
-          let expiredays = 1;
-          setCookie('token', response.data.data.api_token, expiredays);
-
           return {status: true};
         }
       })
@@ -40,6 +33,16 @@ export default {
       })
       .catch(function (error) {
         return false;
+      });
+  },
+
+  forgot_pass(email) {
+    return axios.post('api/password/create', {email})
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error);
       });
   }
 }

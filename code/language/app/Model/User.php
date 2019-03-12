@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Project::class)->withTimestamps();
     }
+
+    public function verifyUser()
+    {
+        return $this->hasOne(VerifyUser::class);
+    }
 }

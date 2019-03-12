@@ -9,68 +9,62 @@
             <div class="hero-body">
                 <div class="container has-text-centered">
                     <div class="column is-4 is-offset-4">
-                        <h3 class="title has-text-grey">{{ $t('Sign_in') }}</h3>
+                        <h3 class="title has-text-grey">{{ $t('Verify_email') }}</h3>
                         <div class="box">
                             <figure class="avatar">
                                 <img src="https://placehold.it/128x128">
                             </figure>
                             <form>
-                                <div class="field">
-                                    <div class="control">
-                                        <input class="input is-large" type="email" :placeholder="$t('Email_address')" autofocus="" v-model="email">
-                                    </div>
-                                </div>
 
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input is-large" type="password" :placeholder="$t('Password')" v-model="password">
+                                        <p>{{ verify_message }}</p>
                                     </div>
                                 </div>
-                                <button class="button is-block is-info is-large is-fullwidth" @click.prevent="login">{{ $t('Sign_in') }}</button>
+
                             </form>
                         </div>
                         <p class="has-text-grey">
-                            <router-link to="register">{{ $t('Sign_up') }}</router-link> &nbsp;·&nbsp;
-                            <router-link to="forgot_pass">{{ $t('Forget_password') }}</router-link>
+                            <router-link :to="{name:'login'}">{{ $t('Sign_in') }}</router-link> &nbsp;·&nbsp;
+                            <router-link :to="{name:'register'}">{{ $t('Sign_up') }}</router-link>
                         </p>
                     </div>
                 </div>
             </div>
         </section>
     </div>
-
 </template>
 
 <script>
-  import auth from './Auth/auth';
+  import http from '../http';
+
+
   import Navbar from './layout/Navbar';
   import LanguageSwitch from './layout/LanguageSwitch';
 
   export default {
-    name: "login",
+    name: "VerifyUser",
     components: {
       Navbar,
-      LanguageSwitch
+      LanguageSwitch,
     },
     data() {
       return {
-        email: null,
-        password: null,
-      };
+        code: this.$route.params.code,
+        verify_message: '',
+      }
     },
     methods: {
-      login() {
-
-        let params = {
-          content: 'Login failed',
-        };
-
-        auth.login(this.email, this.password).then(status => {
-          if (status) this.$router.push({ name: 'project_list', params: this.$i18n.locale })
-          else this.$alertmodal.show(params)
-        });
-
+      verify_user() {
+        http.post('api/user/verify', {token: this.code})
+          .then((response) => {
+            let data = response.data;
+            this.verify_message = data.message;
+          });
       }
+    },
+    mounted() {
+      this.verify_user();
     }
   }
 </script>

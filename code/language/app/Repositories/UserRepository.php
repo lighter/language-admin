@@ -153,4 +153,18 @@ class UserRepository
             ];
         }
     }
+
+    /**
+     * @param $email
+     *
+     * @return mixed
+     */
+    public function getUserByEmail($email)
+    {
+        try {
+            return User::where('email', $email)->first();
+        } catch (QueryException $e) {
+
+        }
+    }
 }

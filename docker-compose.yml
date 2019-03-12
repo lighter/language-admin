@@ -9,7 +9,7 @@ services:
             - postgres
             - redis
         environment:
-            XDEBUG_CONFIG: "remote_host=10.254.254.254 idekey=gtiManageDocker remote_enable=1 remote_handler=dbgp remote_port=9000 remote_autostart=1 remote_connect_back=0 remote_log=/var/log/php_log/xdebug.log"
+            XDEBUG_CONFIG: "remote_host=10.254.254.254 idekey=languageDocker remote_enable=1 remote_handler=dbgp remote_port=9000 remote_autostart=1 remote_connect_back=0 remote_log=/var/log/php_log/xdebug.log"
             PHP_IDE_CONFIG: "serverName=language.develop.com"
         restart: always
     postgres:

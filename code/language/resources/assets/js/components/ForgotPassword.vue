@@ -9,36 +9,36 @@
             <div class="hero-body">
                 <div class="container has-text-centered">
                     <div class="column is-4 is-offset-4">
-                        <h3 class="title has-text-grey">{{ $t('Sign_in') }}</h3>
+                        <h3 class="title has-text-grey">{{ $t('Forget_password') }}</h3>
                         <div class="box">
                             <figure class="avatar">
                                 <img src="https://placehold.it/128x128">
                             </figure>
                             <form>
-                                <div class="field">
-                                    <div class="control">
-                                        <input class="input is-large" type="email" :placeholder="$t('Email_address')" autofocus="" v-model="email">
-                                    </div>
-                                </div>
 
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input is-large" type="password" :placeholder="$t('Password')" v-model="password">
+                                        <input class="input is-large" type="email" :placeholder="$t('Email_address')"
+                                               v-model="email">
                                     </div>
                                 </div>
-                                <button class="button is-block is-info is-large is-fullwidth" @click.prevent="login">{{ $t('Sign_in') }}</button>
+
+                                <button class="button is-block is-info is-large is-fullwidth"
+                                        @click.prevent="forgot_pass">
+                                    {{ $t('Send') }}
+                                </button>
                             </form>
                         </div>
                         <p class="has-text-grey">
-                            <router-link to="register">{{ $t('Sign_up') }}</router-link> &nbsp;·&nbsp;
-                            <router-link to="forgot_pass">{{ $t('Forget_password') }}</router-link>
+                            <router-link to="login">{{ $t('Sign_in') }}</router-link> &nbsp;·&nbsp;
+                            <router-link to="register">{{ $t('Sign_up') }}</router-link>
                         </p>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
 
+    </div>
 </template>
 
 <script>
@@ -47,29 +47,34 @@
   import LanguageSwitch from './layout/LanguageSwitch';
 
   export default {
-    name: "login",
+    name: "ForgotPassword",
     components: {
       Navbar,
-      LanguageSwitch
+      LanguageSwitch,
     },
     data() {
       return {
         email: null,
-        password: null,
       };
     },
     methods: {
-      login() {
-
-        let params = {
-          content: 'Login failed',
+      forgot_pass() {
+        let forgotPasswordSuccessParams = {
+          content: 'Send reset password Success',
         };
 
-        auth.login(this.email, this.password).then(status => {
-          if (status) this.$router.push({ name: 'project_list', params: this.$i18n.locale })
-          else this.$alertmodal.show(params)
-        });
+        let forgotPasswordFailParams = {
+          content: 'Somthing is wrong',
+        };
 
+        auth.forgot_pass(this.email)
+          .then(data => {
+            if (data.status === true) {
+              this.$alertmodal.show(forgotPasswordSuccessParams);
+            } else {
+              this.$alertmodal.show(forgotPasswordFailParams);
+            }
+          });
       }
     }
   }

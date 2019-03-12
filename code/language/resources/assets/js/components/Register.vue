@@ -51,7 +51,7 @@
                         </div>
                         <p class="has-text-grey">
                             <router-link to="login">{{ $t('Sign_in') }}</router-link> &nbsp;·&nbsp;
-                            <a href="../">Forgot Password</a>
+                            <router-link to="forgot_pass">{{ $t('Forget_password') }}</router-link>
                         </p>
                     </div>
                 </div>
@@ -85,9 +85,14 @@
     },
     methods: {
       register() {
-        auth.register(this, this.name, this.email, this.password, this.password_confirmation)
+        auth.register(this, this.name, this.email, this.password, this.password_confirmation, this.$route.params.lang)
           .then(data => {
-            if (data.status) this.$router.push({ name: 'project_list', params: this.$i18n.locale })
+
+            let registerSuccessParams = {
+              content: 'Register Success',
+            };
+
+            if (data.status) this.$alertmodal.show(registerSuccessParams);
             else this.$alertmodal.showErrorMessage(data.errors);
           });
       }

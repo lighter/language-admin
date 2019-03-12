@@ -9,68 +9,110 @@
             <div class="hero-body">
                 <div class="container has-text-centered">
                     <div class="column is-4 is-offset-4">
-                        <h3 class="title has-text-grey">{{ $t('Sign_in') }}</h3>
+                        <h3 class="title has-text-grey">{{ $t('Reset_password') }}</h3>
                         <div class="box">
                             <figure class="avatar">
                                 <img src="https://placehold.it/128x128">
                             </figure>
                             <form>
+
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input is-large" type="email" :placeholder="$t('Email_address')" autofocus="" v-model="email">
+                                        <input class="input is-large" type="password" :placeholder="$t('Password')"
+                                               v-model="password">
                                     </div>
                                 </div>
 
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input is-large" type="password" :placeholder="$t('Password')" v-model="password">
+                                        <input class="input is-large" type="password"
+                                               :placeholder="$t('Confirm_password')"
+                                               v-model="password_confirmation">
                                     </div>
                                 </div>
-                                <button class="button is-block is-info is-large is-fullwidth" @click.prevent="login">{{ $t('Sign_in') }}</button>
+
+                                <button class="button is-block is-info is-large is-fullwidth"
+                                        @click.prevent="reset_pass">
+                                    {{ $t('Send') }}
+                                </button>
                             </form>
                         </div>
                         <p class="has-text-grey">
-                            <router-link to="register">{{ $t('Sign_up') }}</router-link> &nbsp;·&nbsp;
-                            <router-link to="forgot_pass">{{ $t('Forget_password') }}</router-link>
+                            <router-link :to="{name:'login'}">{{ $t('Sign_in') }}</router-link> &nbsp;·&nbsp;
+                            <router-link :to="{name:'register'}">{{ $t('Sign_up') }}</router-link>
                         </p>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
 
+    </div>
 </template>
 
 <script>
-  import auth from './Auth/auth';
+  import http from '../http';
+
   import Navbar from './layout/Navbar';
   import LanguageSwitch from './layout/LanguageSwitch';
 
   export default {
-    name: "login",
+    name: "ResetPassword",
     components: {
       Navbar,
-      LanguageSwitch
+      LanguageSwitch,
     },
     data() {
       return {
-        email: null,
         password: null,
+        password_confirmation: null,
+        code: this.$route.params.code,
+        email: null,
       };
     },
     methods: {
-      login() {
-
-        let params = {
-          content: 'Login failed',
+      reset_pass() {
+        let resetPasswordSuccessParams = {
+          content: 'Reset password Success',
         };
 
-        auth.login(this.email, this.password).then(status => {
-          if (status) this.$router.push({ name: 'project_list', params: this.$i18n.locale })
-          else this.$alertmodal.show(params)
-        });
+        let resetPasswordFailParams = {
+          content: 'Somthing is wrong',
+        };
 
-      }
+        http.post('api/password/reset', {
+          email: this.email,
+          password: this.password,
+          password_confirmation: this.password_confirmation,
+          token: this.code,
+        })
+          .then((response) => {
+            if (response.status === true) {
+              this.$alertmodal.show(resetPasswordSuccessParams);
+            } else {
+              this.$alertmodal.show(resetPasswordFailParams);
+            }
+          });
+      },
+      get_access_token_info() {
+
+        let errors = {
+          content: 'Somthing is wrong',
+        };
+
+        http.get('api/password/find/' + this.code)
+          .then((response) => {
+            if (response.data.status === true) {
+              let data = response.data.data;
+              this.email = data.email;
+            }
+            else {
+              this.$alertmodal.show(errors);
+            }
+          });
+      },
+    },
+    mounted() {
+      this.get_access_token_info();
     }
   }
 </script>

@@ -15,11 +15,16 @@ use Illuminate\Http\Request;
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
+Route::post('password/create', 'Auth\ResetPasswordController@create');
+Route::get('password/find/{token}', 'Auth\ResetPasswordController@find');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::post('user/verify', 'Auth\RegisterController@verifyUser');
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
 
+//Route::post('/send', 'EmailController@send');
 
 Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('project', 'ProjectController');

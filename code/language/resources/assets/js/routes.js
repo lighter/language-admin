@@ -2,6 +2,10 @@ import VueRouter from 'vue-router';
 import Main from './components/layout/Main.vue';
 import Login from './components/Login';
 import Register from './components/Register';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
+import VerifyUser from './components/VerifyUser';
+
 import Home from './components/Home';
 import ProjectCreate from './components/Project/ProjectCreate';
 import ProjectList from './components/Project/ProjectList';
@@ -19,9 +23,12 @@ import store from "./components/store";
 
 
 const routes = [
+  { path: '/:lang/reset_pass/:code', component: ResetPassword, name: 'reset_pass'},
   { path: '/:lang/logout', component: Logout, name: 'logout'},
   { path: '/:lang/login', component: Login, name: 'login'},
   { path: '/:lang/register', component: Register, name: 'register'},
+  { path: '/:lang/forgot_pass', component: ForgotPassword, name: 'forgot_pass'},
+  { path: '/:lang/user/verify/:code', component: VerifyUser, name: 'verify_user'},
   { path: '/:lang',
     component: Main,
     children: [

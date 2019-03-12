@@ -26,7 +26,6 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-
     /**
      * Where to redirect users after login.
      *
@@ -56,16 +55,24 @@ class LoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             $user = $this->guard()->user();
-            $user->generateToken();
 
-            return response()->json([
-                'data' => $user->toArray(),
-            ]);
+            if ($user->verified) {
+                $user->generateToken();
+
+                return response()->json([
+                    'data' => $user->toArray(),
+                ]);
+            }
         }
 
         return $this->sendFailedLoginResponse($request);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout(Request $request)
     {
         $user = Auth::guard('api')->user();

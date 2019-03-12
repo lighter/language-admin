@@ -27,4 +27,7 @@ export default {
   "New": "New",
   "FirstPage": "First Page",
   "LastPage": "Last Page",
+  "Send": "Send",
+  "Reset_password": "Reset password",
+  "Verify_email": "Verify email",
 }

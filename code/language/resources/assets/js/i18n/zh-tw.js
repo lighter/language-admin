@@ -27,4 +27,7 @@ export default {
   "New": "新增",
   "FirstPage": "首頁",
   "LastPage": "末頁",
+  "Send": "送出",
+  "Reset_password": "重設密碼",
+  "Verify_email": "驗證電子郵件",
 }
