@@ -1,25 +1,27 @@
 import VueRouter from 'vue-router';
-import Main from './components/layout/Main.vue';
-import Login from './components/Login';
-import Register from './components/Register';
-import ForgotPassword from './components/ForgotPassword';
-import ResetPassword from './components/ResetPassword';
-import VerifyUser from './components/VerifyUser';
+import Main from '#/components/layout/Main.vue';
+import Login from '#/components/Login';
+import Register from '#/components/Register';
+import ForgotPassword from '#/components/ForgotPassword';
+import ResetPassword from '#/components/ResetPassword';
+import VerifyUser from '#/components/VerifyUser';
 
-import Home from './components/Home';
-import ProjectCreate from './components/Project/ProjectCreate';
-import ProjectList from './components/Project/ProjectList';
-import ProjectEdit from './components/Project/ProjectEdit';
+import Home from '#/components/Home';
+import ProjectCreate from '#/components/Project/ProjectCreate';
+import ProjectList from '#/components/Project/ProjectList';
+import ProjectEdit from '#/components/Project/ProjectEdit';
+import ProjectOwner from '#/components/Project/ProjectOwner';
+import ProjectInvite from '#/components/Project/ProjectInvite';
 
-import LanguageList from './components/Language/LanguageList';
+import LanguageList from '#/components/Language/LanguageList';
 
-import UserList from './components/User/UserList';
-import UserEdit from './components/User/UserEdit';
+import UserList from '#/components/User/UserList';
+import UserEdit from '#/components/User/UserEdit';
 
-import NotFound from './components/NotFound';
-import Logout from './components/Logout';
-import {i18n} from "./i18n";
-import store from "./components/store";
+import NotFound from '#/components/NotFound';
+import Logout from '#/components/Logout';
+import {i18n} from "#/i18n";
+import store from "#/components/store";
 
 
 const routes = [
@@ -38,6 +40,8 @@ const routes = [
       { path: 'project', component: ProjectList, name: 'project_list' },
       { path: 'project/create', component: ProjectCreate, name: 'project_create' },
       { path: 'project/:id/edit', component: ProjectEdit, name: 'project_edit' },
+      { path: 'project/:id/owner', component: ProjectOwner, name: 'project_owner' },
+      { path: 'project/invite/:token', component: ProjectInvite, name: 'project_invite'},
 
       // user
       { path: 'user', component: UserList, name: 'user_list' },

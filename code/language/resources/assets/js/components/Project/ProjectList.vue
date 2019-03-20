@@ -20,8 +20,9 @@
                 <td>{{ project.created_at }}</td>
                 <td>{{ project.updated_at }}</td>
                 <td>
-                    <router-link :to="{path: `/${$i18n.locale}/project/${project.id}/edit`}" class="button is-light">{{ $t('Modify') }}</router-link>
+                    <router-link :to="{path: `/${$i18n.locale}/project/${project.id}/edit`}" class="button is-light" v-if="project.pivot.owner">{{ $t('Modify') }}</router-link>
                     <router-link :to="{path: `/${$i18n.locale}/language/${project.id}`}" class="button is-light">{{ $t('Language') }}</router-link>
+                    <router-link :to="{path: `/${$i18n.locale}/project/${project.id}/owner`}" class="button is-light" v-if="project.pivot.owner">{{ $t('Owner') }}</router-link>
                 </td>
             </tr>
             </tbody>
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-  import http from '../../http';
+  import http from '#/http';
 
   export default {
     name: "ProjectList",

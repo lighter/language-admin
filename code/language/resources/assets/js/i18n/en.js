@@ -30,4 +30,10 @@ export default {
   "Send": "Send",
   "Reset_password": "Reset password",
   "Verify_email": "Verify email",
+  "Owner": "Owner",
+  "Read": "Read",
+  "Write": "Write",
+  "Invite_email": "Invite email",
+  'join_project_successful': 'Successfully join this project',
+  'join_project_failed': 'Please resend invite join project mail',
 }

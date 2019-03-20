@@ -45,11 +45,17 @@ class User extends Authenticatable
         return $this->api_token;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function projects()
     {
-        return $this->belongsToMany(Project::class)->withTimestamps();
+        return $this->belongsToMany(Project::class)->withTimestamps()->withPivot('read', 'write', 'owner');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function verifyUser()
     {
         return $this->hasOne(VerifyUser::class);

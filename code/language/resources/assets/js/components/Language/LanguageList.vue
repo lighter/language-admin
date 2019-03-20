@@ -33,8 +33,8 @@
 </template>
 
 <script>
-  import http from '../../http';
-  import LanguageListTableRow from './LanguageListTableRow';
+  import http from '#/http';
+  import LanguageListTableRow from '#/components/Language/LanguageListTableRow';
 
   export default {
     name: "LanguageList",

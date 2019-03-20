@@ -3,8 +3,8 @@
 </template>
 
 <script>
-  import store from './store';
-  import {delCookie} from '../util/cookie';
+  import store from '#/components/store';
+  import {delCookie} from '#/util/cookie';
 
   export default {
     name: "Logout",

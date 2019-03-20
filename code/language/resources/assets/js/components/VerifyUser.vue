@@ -36,11 +36,11 @@
 </template>
 
 <script>
-  import http from '../http';
+  import http from '#/http';
 
 
-  import Navbar from './layout/Navbar';
-  import LanguageSwitch from './layout/LanguageSwitch';
+  import Navbar from '#/components/layout/Navbar';
+  import LanguageSwitch from '#/components/layout/LanguageSwitch';
 
   export default {
     name: "VerifyUser",

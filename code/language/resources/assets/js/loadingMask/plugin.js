@@ -1,4 +1,4 @@
-import LoadingMask from './LoadingMask';
+import LoadingMask from '#/loadingMask/LoadingMask';
 
 const Loading = {
   install (Vue, options) {

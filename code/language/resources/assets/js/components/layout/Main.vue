@@ -35,10 +35,10 @@
 </template>
 
 <script>
-  import Navbar from './Navbar';
-  import Menu from './Menu';
-  import LanguageSwitch from './LanguageSwitch';
-  import store from '../store';
+  import Navbar from '#/components/layout/Navbar';
+  import Menu from '#/components/layout/Menu';
+  import LanguageSwitch from '#/components/layout/LanguageSwitch';
+  import store from '#/components/store';
 
   export default {
     components: {

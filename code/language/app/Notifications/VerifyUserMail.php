@@ -8,25 +8,25 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\App;
 
-class VerifyUserMail extends Notification
+class VerifyUserMail extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public $user;
-    public $lang;
+    public $language;
 
     /**
      * Create a new notification instance.
      *
      * @param $user
-     * @param $lang
+     * @param $language
      */
-    public function __construct($user, $lang)
+    public function __construct($user, $language)
     {
         $this->user = $user;
-        $this->lang = $lang;
+        $this->language = $language;
 
-        App::setLocale($this->lang);
+        App::setLocale($this->language);
     }
 
 
@@ -49,7 +49,7 @@ class VerifyUserMail extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url("/#/{$this->lang}/user/verify/{$this->user->verifyUser->token}");
+        $url = url("/#/{$this->language}/user/verify/{$this->user->verifyUser->token}");
 
         return (new MailMessage)
             ->line(trans('verifyUserMail.check_email', ['email_id' => $this->user->email]))

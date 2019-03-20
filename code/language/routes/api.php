@@ -24,11 +24,12 @@ Route::post('user/verify', 'Auth\RegisterController@verifyUser');
 //    return $request->user();
 //});
 
-//Route::post('/send', 'EmailController@send');
-
 Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('project', 'ProjectController');
+    Route::post('project/owner', 'ProjectController@getProjectOwner');
     Route::get('user_project_languages/{projectId}', 'ProjectController@getProjectLanguages');
+    Route::post('project/invite_user', 'ProjectController@inviteUser');
+    Route::get('project/invite/{token}', 'ProjectController@activeInviteUser');
 
     Route::get('user_projects', 'UserController@getUserProjects');
     Route::get('users', 'UserController@getUsers');

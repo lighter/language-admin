@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import languageList from '../../i18n/languageList';
+  import languageList from '#/i18n/languageList';
 
   export default {
     name: "LanguageList",

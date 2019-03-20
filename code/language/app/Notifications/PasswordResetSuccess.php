@@ -22,8 +22,9 @@ class PasswordResetSuccess extends Notification implements ShouldQueue
      */
     public function __construct($language = 'en')
     {
-        //
         $this->language = $language;
+
+        App::setLocale($this->language);
     }
 
     /**

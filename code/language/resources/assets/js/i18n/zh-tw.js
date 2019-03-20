@@ -30,4 +30,10 @@ export default {
   "Send": "送出",
   "Reset_password": "重設密碼",
   "Verify_email": "驗證電子郵件",
+  "Owner": "擁有者",
+  "Read": "讀",
+  "Write": "寫",
+  "Invite_email": "邀請 Email",
+  'join_project_successful': '成功加入專案',
+  'join_project_failed': '請再發送一次邀請加入專案 mail',
 }

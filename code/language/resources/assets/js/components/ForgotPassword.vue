@@ -42,9 +42,9 @@
 </template>
 
 <script>
-  import auth from './Auth/auth';
-  import Navbar from './layout/Navbar';
-  import LanguageSwitch from './layout/LanguageSwitch';
+  import auth from '#/components/Auth/auth';
+  import Navbar from '#/components/layout/Navbar';
+  import LanguageSwitch from '#/components/layout/LanguageSwitch';
 
   export default {
     name: "ForgotPassword",

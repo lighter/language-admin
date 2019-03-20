@@ -52,7 +52,7 @@ class LanguageRepository
     public function updateLanguage($data, $id)
     {
         try {
-            $language = $this->model->where('id', $id);
+            $language = $this->model->find($id);
             $language->lang = $data['lang'];
             $language->lang_key = $data['lang_key'];
 

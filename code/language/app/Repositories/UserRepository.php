@@ -133,7 +133,7 @@ class UserRepository
     public function updateUser($userId, $data)
     {
         try {
-            $user = $this->model->where('id', $userId)->first();
+            $user = $this->model->find($userId);
 
             if (!empty($data['name']) && $data['name'] != $user->name) $user->name = $data['name'];
             if (!empty($data['email']) && $data['email'] != $user->email) $user->email = $data['email'];

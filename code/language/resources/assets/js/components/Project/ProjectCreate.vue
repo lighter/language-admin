@@ -72,8 +72,8 @@
 
 <script>
 
-  import LanguageList from '../layout/LanguageList';
-  import http from '../../http';
+  import LanguageList from '#/components/layout/LanguageList';
+  import http from '#/http';
 
   export default {
     name: "ProjectCreate",
@@ -104,6 +104,7 @@
           public: this.public,
           language: this.selectedLanguage
         }).then((response) => {
+          console.log('create porject', response.data);
           if (response.data.data.status) this.$alertmodal.show(createSuccessParams);
           else this.$alertmodal.show(createFailParams);
         });

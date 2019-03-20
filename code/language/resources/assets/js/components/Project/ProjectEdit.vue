@@ -71,8 +71,8 @@
 </template>
 
 <script>
-  import LanguageList from '../layout/LanguageList';
-  import http from '../../http';
+  import LanguageList from '#/components/layout/LanguageList';
+  import http from '#/http';
 
   export default {
     name: "ProjectEdit",
@@ -122,6 +122,7 @@
           language: this.selectedLanguage
         })
           .then((response) => {
+            console.log('edit porject', response.data);
             if (response.data.data.status) this.$alertmodal.show(updateSuccessParams);
             else this.$alertmodal.show(updateFailParams);
           });

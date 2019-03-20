@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import AlertModal from './plugin';
+  import AlertModal from '#/alertModal/plugin';
 
   export default {
     name: "DialogModal",

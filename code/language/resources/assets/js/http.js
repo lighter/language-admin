@@ -1,4 +1,4 @@
-import {getCookie} from "./util/cookie";
+import {getCookie} from "#/util/cookie";
 
 const http = axios.create ({
   baseURL: process.env.VUE_APP_ROOT_API,

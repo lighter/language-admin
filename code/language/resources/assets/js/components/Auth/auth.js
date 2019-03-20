@@ -1,5 +1,5 @@
-import store from "../store";
-import {setCookie} from '../../util/cookie';
+import store from "#/components/store";
+import {setCookie} from '#/util/cookie';
 
 export default {
 

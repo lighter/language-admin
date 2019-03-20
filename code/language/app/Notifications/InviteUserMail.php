@@ -6,22 +6,28 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\App;
 
-class PasswordResetRequest extends Notification implements ShouldQueue
+class InviteUserMail extends Notification implements ShouldQueue
 {
     use Queueable;
-    protected $token;
-    protected $language;
+
+    public $language;
+    public $token;
+    public $email;
 
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param $language
+     * @param $token
+     * @param $email
      */
-    public function __construct($token, $language = 'en')
+    public function __construct($language, $token, $email)
     {
-        $this->token = $token;
         $this->language = $language;
+        $this->token = $token;
+        $this->email = $email;
 
         App::setLocale($this->language);
     }
@@ -29,8 +35,7 @@ class PasswordResetRequest extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -41,25 +46,22 @@ class PasswordResetRequest extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        $url = url('/#/' . $this->language . '/reset_pass/' . $this->token);
+        $url = url("/#/{$this->language}/project/invite/{$this->token}");
 
         return (new MailMessage)
-            ->line('You are receiving this email because we received a password reset request for your account.')
-            ->action('Reset Password', url($url))
-            ->line('If you did not request a password reset, no further action is required.');
+            ->line(trans('inviteUserMail.join_project'))
+            ->action(trans('inviteUserMail.join'), url($url));
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function toArray($notifiable)

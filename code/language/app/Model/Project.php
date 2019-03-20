@@ -25,7 +25,7 @@ class Project extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('read', 'write', 'owner');
     }
 
     /**
@@ -34,5 +34,13 @@ class Project extends Model
     public function languages()
     {
         return $this->hasMany(Language::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function inviteUser()
+    {
+        return $this->hasMany(InviteUser::class);
     }
 }

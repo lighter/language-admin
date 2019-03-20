@@ -4,7 +4,7 @@
 
 <script>
 
-  import Loading from './plugin';
+  import Loading from '#/loadingMask/plugin';
 
   export default {
     name: "LoadingMask",

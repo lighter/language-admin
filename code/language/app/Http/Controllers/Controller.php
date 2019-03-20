@@ -20,7 +20,7 @@ class Controller extends BaseController
             'last_page'        => $pageData['last_page'],
             'per_page'         => $pageData['per_page'],
             'total_data_count' => $pageData['total'],
-            'total_page'       => round($pageData['total'] / $pageData['per_page']),
+            'total_page'       => ceil($pageData['total'] / $pageData['per_page']),
         ];
 
         return [$data, $pagination];

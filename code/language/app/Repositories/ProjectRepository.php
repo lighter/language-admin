@@ -31,9 +31,17 @@ class ProjectRepository
     public function createProject(array $data)
     {
         try {
-            return $this->model->create($data);
-        } catch (QueryException $e) {
+            $project = $this->model->create($data);
 
+            return [
+                'status' => true,
+                'data'   => $project,
+            ];
+        } catch (QueryException $e) {
+            return [
+                'status' => false,
+                'error'  => $e->getMessage(),
+            ];
         }
     }
 
@@ -60,7 +68,7 @@ class ProjectRepository
     public function updateProject($request, $id)
     {
         try {
-            $project = $this->model->where('id', $id);
+            $project = $this->model->find($id);
 
             $project->name = $request->get('name');
             $project->public = $request->get('public');
@@ -69,23 +77,77 @@ class ProjectRepository
             $project->save();
 
             return [
-              'status' => true,
-              'data' => $project,
+                'status' => true,
+                'data'   => $project,
             ];
         } catch (QueryException $e) {
             return [
                 'status' => false,
-                'error' => $e->getMessage(),
+                'error'  => $e->getMessage(),
             ];
         }
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function getProjectLanguages($id)
     {
         try {
-            return $this->model->where('id', $id)->languages()->get();
+            return $this->model->find($id)->languages()->get();
         } catch (QueryException $e) {
 
+        }
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function getProjectOwners($id, $page, $pageSize)
+    {
+        try {
+            return $this->model->find($id)->users()->paginate($pageSize, ['id', 'name', 'email', 'verified'], 'page',
+                $page);
+        } catch (QueryException $e) {
+
+        }
+    }
+
+    /**
+     * @param $projectId
+     * @param $user
+     *
+     * @return mixed
+     */
+    public function assignProjectToUser($projectId, $user)
+    {
+        try {
+            $this->model->find($projectId)->users()->attach($user, [
+                'read'  => true,
+                'write' => true,
+                'owner' => false,
+            ]);
+
+            $inviteUser = $this->model->where('id', $projectId)->first()->users->filter(function ($users) use ($user
+            ) {
+                return $users->id == $user->id;
+            })->first();
+
+            if ($inviteUser) {
+                return [
+                    'status' => true,
+                    'data'   => $inviteUser,
+                ];
+            }
+        } catch (QueryException $e) {
+            return [
+                'status' => false,
+                'error'  => $e->getMessage(),
+            ];
         }
     }
 }

@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\InviteUserMail;
+use App\Repositories\InviteUserRepository;
 use App\Repositories\ProjectRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
- * @property ProjectRepository projectRepository
+ * Class ProjectController
+ *
+ * @package App\Http\Controllers
  */
 class ProjectController extends Controller
 {
@@ -16,19 +20,31 @@ class ProjectController extends Controller
      * @var UserRepository
      */
     private $userRepository;
+    /**
+     * @var InviteUserRepository
+     */
+    private $inviteUserRepository;
+    /**
+     * @var ProjectRepository
+     */
+    private $projectRepository;
 
     /**
      * ProjectController constructor.
      *
-     * @param ProjectRepository $projectRepository
-     * @param UserRepository    $userRepository
+     * @param ProjectRepository    $projectRepository
+     * @param UserRepository       $userRepository
+     * @param InviteUserRepository $inviteUserRepository
      */
     public function __construct(
         ProjectRepository $projectRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        InviteUserRepository $inviteUserRepository
+
     ) {
         $this->projectRepository = $projectRepository;
         $this->userRepository = $userRepository;
+        $this->inviteUserRepository = $inviteUserRepository;
     }
 
     /**
@@ -46,9 +62,13 @@ class ProjectController extends Controller
             'language' => json_encode($request->get('language', [])),
         ]);
 
-        $newProject->users()->attach($request->user());
+        $newProject->users()->attach($request->user(), [
+            'read'  => true,
+            'write' => true,
+            'owner' => true,
+        ]);
 
-        return response()->json(['data' => $newProject], Response::HTTP_OK);
+        return response()->json(['data' => $newProject, 'status' => true], Response::HTTP_OK);
     }
 
     /**
@@ -123,4 +143,77 @@ class ProjectController extends Controller
             'project' => $project,
         ], Response::HTTP_OK);
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getProjectOwner(Request $request)
+    {
+        $projectId = $request->get('projectId');
+        $page = $request->get('page', 1);
+        $pageSize = $request->get('pageSize', 10);
+        $projectOwners = $this->projectRepository->getProjectOwners($projectId, $page, $pageSize);
+
+        [$projectOwners, $pagination] = $this->getPaginationData($projectOwners);
+
+        return response()->json([
+            'data'       => $projectOwners,
+            'pagination' => $pagination,
+        ], Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function inviteUser(Request $request)
+    {
+        $status = false;
+
+        $lang = $request->get('lang', 'en');
+        $email = $request->get('email');
+        $project_id = $request->get('id');
+        $user = \Auth::user();
+
+        $userProject = $this->userRepository->getUserProject($user->id, $project_id);
+        $userMail = $this->userRepository->getUserByEmail($email);
+        $inviteUser = $this->inviteUserRepository->updateOrCreate($userMail->id, $project_id);
+
+        if ($userProject && $userMail && $inviteUser) {
+            $user->notify(new InviteUserMail($lang, $inviteUser->token, $email));
+
+            $status = true;
+        }
+
+        return response()->json(['status' => $status], Response::HTTP_OK);
+    }
+
+    /**
+     * @param $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function activeInviteUser($token)
+    {
+        $status = false;
+
+        $user = \Auth::user();
+        $inviteUser = $this->inviteUserRepository->getInviteUser($user->id, $token);
+
+        $inviteUserIsExpired = ($inviteUser) ? $this->inviteUserRepository->checkInviteUserIsExpired($user->id, $inviteUser->project_id) : null;
+
+        if ($inviteUser && $inviteUserIsExpired) {
+            $assignProjectToUser = $this->projectRepository->assignProjectToUser($inviteUser->project_id, $user);
+
+            if ($assignProjectToUser['status']) {
+                $status = true;
+            }
+        }
+
+        return response()->json(['status' => $status], Response::HTTP_OK);
+    }
+
 }

@@ -1,4 +1,4 @@
-import DialogModal from './DialogModal';
+import DialogModal from '#/alertModal/DialogModal';
 
 const AlertModal = {
   // every plugin for Vue.js needs install method

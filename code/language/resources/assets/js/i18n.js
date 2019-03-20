@@ -1,6 +1,6 @@
 import VueI18n from 'vue-i18n';
-import en from './i18n/en';
-import zh_tw from './i18n/zh-tw';
+import en from '#/i18n/en';
+import zh_tw from '#/i18n/zh-tw';
 
 Vue.use(VueI18n);
 
