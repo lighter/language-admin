@@ -37,9 +37,10 @@ class LanguageRepository
     public function createLanguage(array $data)
     {
         try {
+//            return $data;
             return $this->model->create($data);
         } catch (QueryException $e) {
-
+            return $e->getMessage();
         }
     }
 

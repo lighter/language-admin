@@ -92,9 +92,19 @@
               content: 'Register Success',
             };
 
-            if (data.status) this.$alertmodal.show(registerSuccessParams);
-            else this.$alertmodal.showErrorMessage(data.errors);
+            if (data.status) {
+              this.$alertmodal.show(registerSuccessParams);
+              this.clearForm();
+            } else {
+              this.$alertmodal.showErrorMessage(data.errors);
+            }
           });
+      },
+      clearForm() {
+        let self = this;
+        Object.keys(this.$data).forEach(function (key, index) {
+          self.$data[key] = '';
+        });
       }
     }
   }

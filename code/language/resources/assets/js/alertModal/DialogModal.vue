@@ -31,14 +31,17 @@
         showModal: false,
         showText: true,
         errors: null,
+        closeCallBack: function () {},
       }
     },
     methods: {
       close() {
         this.showModal = false;
+        this.closeCallBack();
       },
       show(params) {
-        this.content = params.content
+        this.content = params.content;
+        if (params["callback"] != undefined) this.closeCallBack = params.callback;
         this.showModal = true;
       },
       showErrorMessage(errors) {

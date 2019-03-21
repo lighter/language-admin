@@ -17,8 +17,7 @@ class CreateLanguagesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('user_id');
-            $table->string('lang_key');
-            $table->jsonb('lang_value');
+            $table->jsonb('lang_key');
             $table->softDeletes();
             $table->timestamps();
         });

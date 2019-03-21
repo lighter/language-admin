@@ -81,7 +81,6 @@
           'pageSize': pageSize,
         })
           .then(response => {
-            console.log(response.data);
             let data = response.data.data;
             this.projectOwner = data;
             this.pagination = response.data.pagination
@@ -95,6 +94,20 @@
         })
           .then(response => {
             console.log(response);
+            let data = response.data;
+
+            if (data.status) {
+              this.$alertmodal.show({
+                'content': 'Invite Success'
+              });
+
+              this.inviteEmail = '';
+            }
+            else {
+              this.$alertmodal.show({
+                'content': 'Invite Failed'
+              });
+            }
           });
       }
     },

@@ -40,7 +40,8 @@
             </div>
             <div class="field-body">
                 <div class="field is-narrow">
-                    <LanguageList :selected-language="selectedLanguage" @changeSelectedLanguage="changeSelectedLanguage"></LanguageList>
+                    <LanguageList :selected-language="selectedLanguage"
+                                  @changeSelectedLanguage="changeSelectedLanguage"></LanguageList>
                 </div>
             </div>
         </div>
@@ -104,13 +105,21 @@
           public: this.public,
           language: this.selectedLanguage
         }).then((response) => {
-          console.log('create porject', response.data);
-          if (response.data.data.status) this.$alertmodal.show(createSuccessParams);
-          else this.$alertmodal.show(createFailParams);
+          if (response.data.data.status) {
+            this.$alertmodal.show(createSuccessParams);
+            this.clearForm();
+          } else {
+            this.$alertmodal.show(createFailParams);
+          }
         });
       },
       changeSelectedLanguage(value) {
         this.selectedLanguage = value;
+      },
+      clearForm() {
+        this.name = '';
+        this.public = null;
+        this.language = null;
       }
     }
   }

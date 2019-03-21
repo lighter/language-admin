@@ -62,11 +62,13 @@ class ProjectController extends Controller
             'language' => json_encode($request->get('language', [])),
         ]);
 
-        $newProject->users()->attach($request->user(), [
-            'read'  => true,
-            'write' => true,
-            'owner' => true,
-        ]);
+        if ($newProject['status']) {
+            $newProject['data']->users()->attach($request->user(), [
+                'read'  => true,
+                'write' => true,
+                'owner' => true,
+            ]);
+        }
 
         return response()->json(['data' => $newProject, 'status' => true], Response::HTTP_OK);
     }

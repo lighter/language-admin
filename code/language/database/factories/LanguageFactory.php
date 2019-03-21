@@ -10,7 +10,7 @@ $factory->define(App\Model\Language::class, function (Faker $faker) {
         'user_id'    => function () {
             return factory(App\Model\User::class)->create()->id;
         },
-        'lang_key'   => $faker->word,
-        'lang_value' => json_encode(['zh_tw' => '', 'zh_cn' => '', 'en' => '']),
+        'lang'   => $faker->word,
+        'lang_key' => json_encode(['zh_tw' => '', 'zh_cn' => '', 'en' => '']),
     ];
 });
