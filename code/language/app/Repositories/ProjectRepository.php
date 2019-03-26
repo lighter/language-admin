@@ -150,4 +150,70 @@ class ProjectRepository
             ];
         }
     }
+
+    /**
+     * @param $projectId
+     * @param $user_id
+     * @param $read
+     * @param $write
+     *
+     * @return array
+     */
+    public function updatePorjectOwnerSetting($projectId, $user_id, $read, $write)
+    {
+        try {
+            $projectOwnerUser =
+                $this->model->find($projectId)->users()->get()->filter(function ($users) use ($user_id) {
+                    return $users->id == $user_id;
+                })->first();
+
+            if ($projectOwnerUser) {
+                $result = $projectOwnerUser->projects()->updateExistingPivot(
+                    $projectId, [
+                    'read'  => $read,
+                    'write' => $write,
+                ]);
+
+                return [
+                    'status' => $result ? true : false,
+                    'data'   => $projectOwnerUser->projects()->first(),
+                ];
+            }
+
+        } catch (QueryException $e) {
+            return [
+                'status' => false,
+                'error'  => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * @param $projectId
+     * @param $user
+     *
+     * @return array
+     */
+    public function checkProjectOwner($projectId, $user)
+    {
+        try {
+            $stauts = false;
+
+            $projectIsOWner = $this->model->find($projectId)->users()->get()->filter(function ($users) use ($user) {
+                return $users->id == $user->id;
+            })->first();
+
+            if ($projectIsOWner) {
+                $status = ($projectIsOWner->pivot->owner);
+            }
+
+            return ['status' => $status];
+
+        } catch (QueryException $e) {
+            return [
+                'status' => false,
+                'error'  => $e->getMessage(),
+            ];
+        }
+    }
 }

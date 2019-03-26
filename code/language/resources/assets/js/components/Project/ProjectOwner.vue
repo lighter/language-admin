@@ -37,15 +37,30 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="owner in projectOwner">
+                <tr v-for="(owner, index) in projectOwner">
                     <td>{{owner.name}}</td>
                     <td>{{owner.email}}</td>
-                    <td>{{owner.pivot.owner}}</td>
-                    <td>{{owner.pivot.read}}</td>
-                    <td>{{owner.pivot.write}}</td>
+                    <td>{{isOwner(owner.pivot.owner)}}</td>
+
+                    <td v-if="owner.pivot.owner">{{ isRead(owner.pivot.read) }}</td>
+                    <td v-else>
+                        <input type="checkbox" v-model="owner.pivot.read" :key="index" :value="owner.pivot.read"
+                               :checked="owner.pivot.read">{{ isRead(owner.pivot.read) }}
+                    </td>
+
+                    <td v-if="owner.pivot.owner">{{ isWrite(owner.pivot.write) }}</td>
+                    <td v-else>
+                        <input type="checkbox" v-model="owner.pivot.write" :key="index" :value="owner.pivot.write"
+                               :checked="owner.pivot.write">{{ isRead(owner.pivot.write) }}
+                    </td>
+
                     <td>{{owner.pivot.created_at}}</td>
                     <td>{{owner.pivot.updated_at}}</td>
-                    <td></td>
+                    <td>
+                        <button type="button" class="button is-light" v-if="!owner.pivot.owner" @click.prevent="saveSetting(index)">{{ $t('Save')
+                            }}
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -60,6 +75,7 @@
 <script>
   import http from '#/http';
   import Pagination from '#/Pagination/Pagination';
+  import {i18n} from "#/i18n";
 
   export default {
     name: "ProjectOwner",
@@ -93,7 +109,6 @@
           id: this.$route.params.id,
         })
           .then(response => {
-            console.log(response);
             let data = response.data;
 
             if (data.status) {
@@ -102,11 +117,36 @@
               });
 
               this.inviteEmail = '';
-            }
-            else {
+            } else {
               this.$alertmodal.show({
                 'content': 'Invite Failed'
               });
+            }
+          });
+      },
+      isOwner(owner) {
+        return (owner) ? i18n.t('Yes') : i18n.t('No')
+      },
+      isRead(read) {
+        return (read) ? i18n.t('Yes') : i18n.t('No')
+      },
+      isWrite(write) {
+        return (write) ? i18n.t('Yes') : i18n.t('No')
+      },
+      saveSetting(index) {
+        let owner = this.projectOwner[index];
+        let ownerData = {
+          id: owner.id,
+          project_id: owner.pivot.project_id,
+          read: owner.pivot.read,
+          write: owner.pivot.write,
+        };
+
+        http.post('api/project/owner_setting', ownerData)
+          .then(response => {
+
+            if (response.data.status) {
+              this.projectOwner[index].pivot.updated_at = response.data.data.pivot.updated_at;
             }
           });
       }

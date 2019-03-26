@@ -4,3 +4,4 @@
 /.idea
 /code/language/public
 .DS_Store
+*.log

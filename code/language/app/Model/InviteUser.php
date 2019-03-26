@@ -25,6 +25,7 @@ class InviteUser extends Model
         'user_id',
         'project_id',
         'token',
+        'updated_at',
     ];
 
     /**

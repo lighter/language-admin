@@ -25,7 +25,7 @@
             <div class="columns is-desktop is-gapless">
                 <Menu></Menu>
 
-                <div class="column is-9">
+                <div class="column is-11">
                     <router-view></router-view>
                 </div>
             </div>

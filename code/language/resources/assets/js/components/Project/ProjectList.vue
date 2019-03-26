@@ -15,14 +15,22 @@
             <tbody>
             <tr v-for="project in userProjects">
                 <td>{{ project.name }}</td>
-                <td>{{ project.language }}</td>
+                <td class="lang-tag">
+                    <span v-for="lang in JSON.parse(project.language)" class="tag is-primary">{{ lang }}</span>
+                </td>
                 <td>{{ project.public ? $t('Public') : $t('NonPublic') }}</td>
                 <td>{{ project.created_at }}</td>
                 <td>{{ project.updated_at }}</td>
                 <td>
-                    <router-link :to="{path: `/${$i18n.locale}/project/${project.id}/edit`}" class="button is-light" v-if="project.pivot.owner">{{ $t('Modify') }}</router-link>
-                    <router-link :to="{path: `/${$i18n.locale}/language/${project.id}`}" class="button is-light">{{ $t('Language') }}</router-link>
-                    <router-link :to="{path: `/${$i18n.locale}/project/${project.id}/owner`}" class="button is-light" v-if="project.pivot.owner">{{ $t('Owner') }}</router-link>
+                    <router-link :to="{path: `/${$i18n.locale}/project/${project.id}/edit`}" class="button is-light"
+                                 v-if="project.pivot.owner">{{ $t('Modify') }}
+                    </router-link>
+                    <router-link :to="{path: `/${$i18n.locale}/language/${project.id}`}" class="button is-light">{{
+                        $t('Language') }}
+                    </router-link>
+                    <router-link :to="{path: `/${$i18n.locale}/project/${project.id}/owner`}" class="button is-light"
+                                 v-if="project.pivot.owner && project.public">{{ $t('Owner') }}
+                    </router-link>
                 </td>
             </tr>
             </tbody>
@@ -55,5 +63,7 @@
 </script>
 
 <style scoped>
-
+    td.lang-tag > span {
+        margin-right: 5px;
+    }
 </style>

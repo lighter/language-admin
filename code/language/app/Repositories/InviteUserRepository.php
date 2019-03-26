@@ -82,19 +82,18 @@ class InviteUserRepository
     {
         try {
             $inviteUser = $this->model->where('user_id', $userId)->where('project_id', $projectId)->first();
-
             if ($inviteUser) {
                 if (Carbon::parse($inviteUser->updated_at)->addMinutes(720)->isPast()) {
                     $inviteUser->delete();
+                    return false;
                 }
 
-                return false;
-            } else {
                 return true;
+            } else {
+                return false;
             }
 
         } catch (QueryException $e) {
-
         }
     }
 }

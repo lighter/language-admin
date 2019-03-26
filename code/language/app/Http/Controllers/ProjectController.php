@@ -205,10 +205,14 @@ class ProjectController extends Controller
         $user = \Auth::user();
         $inviteUser = $this->inviteUserRepository->getInviteUser($user->id, $token);
 
-        $inviteUserIsExpired = ($inviteUser) ? $this->inviteUserRepository->checkInviteUserIsExpired($user->id, $inviteUser->project_id) : null;
+        $inviteUserIsExpired =
+            ($inviteUser) ? $this->inviteUserRepository->checkInviteUserIsExpired($user->id, $inviteUser->project_id) :
+                null;
 
         if ($inviteUser && $inviteUserIsExpired) {
             $assignProjectToUser = $this->projectRepository->assignProjectToUser($inviteUser->project_id, $user);
+
+            return $assignProjectToUser;
 
             if ($assignProjectToUser['status']) {
                 $status = true;
@@ -218,4 +222,34 @@ class ProjectController extends Controller
         return response()->json(['status' => $status], Response::HTTP_OK);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateProjectOwnerSetting(Request $request)
+    {
+        $status = false;
+
+        $user = \Auth::user();
+        $project_id = $request->get('project_id');
+        $user_id = $request->get('id');
+        $read = $request->get('read');
+        $write = $request->get('write');
+
+        $checkUserIsProjectOwner = $this->projectRepository->checkProjectOwner($project_id, $user);
+
+
+        if ($checkUserIsProjectOwner['status']) {
+            $updateProjectOwnerSetting =
+                $this->projectRepository->updatePorjectOwnerSetting($project_id, $user_id, $read, $write);
+
+            if ($updateProjectOwnerSetting['status']) {
+                $status = true;
+                $data = $updateProjectOwnerSetting['data'];
+            }
+        }
+
+        return response()->json(['status' => $status, 'data' => $data ?? null], Response::HTTP_OK);
+    }
 }

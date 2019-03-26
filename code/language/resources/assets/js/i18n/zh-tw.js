@@ -34,6 +34,8 @@ export default {
   "Read": "讀",
   "Write": "寫",
   "Invite_email": "邀請 Email",
-  'join_project_successful': '成功加入專案',
-  'join_project_failed': '請再發送一次邀請加入專案 mail',
+  "join_project_successful": "成功加入專案",
+  "join_project_failed": "請再發送一次邀請加入專案 mail",
+  "Yes": "是",
+  "No": "否",
 }
