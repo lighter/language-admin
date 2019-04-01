@@ -8,6 +8,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function testRequiredEmailAndLogin()
     {
         $this->json('POST', 'api/login')
@@ -20,11 +22,31 @@ class LoginTest extends TestCase
             ]);
     }
 
+    public function testUserUnVerifiedLoginFailed()
+    {
+        $user = factory(\App\Model\User::class)->create([
+            'email'    => 'testlogin@user.com',
+            'password' => bcrypt('toptal123'),
+        ]);
+
+        $payload = ['email' => 'testlogin@user.com', 'password' => 'toptal123'];
+
+        $this->json('POST', 'api/login', $payload)
+            ->assertStatus(422)
+            ->assertJson([
+                'errors' => [
+                    'email' => ['These credentials do not match our records.']
+                ],
+            ]);
+
+    }
+
     public function testUserLoginSuccessfully()
     {
         $user = factory(\App\Model\User::class)->create([
             'email'    => 'testlogin@user.com',
             'password' => bcrypt('toptal123'),
+            'verified' => true,
         ]);
 
         $payload = ['email' => 'testlogin@user.com', 'password' => 'toptal123'];

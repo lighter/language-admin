@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\VerifyUser;
 use App\Notifications\VerifyUserMail;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -79,12 +80,12 @@ class RegisterController extends Controller
 
         $lang = $data['lang'] ?? 'en';
 
-//        VerifyUser::create([
-//            'user_id' => $user->id,
-//            'token'   => str_random(40),
-//        ]);
+        VerifyUser::create([
+            'user_id' => $user->id,
+            'token'   => str_random(40),
+        ]);
 
-//        $user->notify(new VerifyUserMail($user, $lang));
+        $user->notify(new VerifyUserMail($user, $lang));
 
         return $user;
     }
@@ -133,6 +134,6 @@ class RegisterController extends Controller
             $message = "Sorry your email cannot be identified.";
         }
 
-        return response()->json(['status' => $status, 'message' => $message]);
+        return response()->json(['status' => $status, 'message' => $message], Response::HTTP_OK);
     }
 }

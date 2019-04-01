@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->boolean('verified')->default(false);
             $table->string('github_id')->unique()->nullable();
             $table->string('google_id')->unique()->nullable();
-            $table->string('remember_token')->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

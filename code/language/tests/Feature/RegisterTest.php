@@ -2,24 +2,20 @@
 
 namespace Tests\Feature;
 
+use App\Model\User;
+use App\Model\VerifyUser;
+use App\Notifications\VerifyUserMail;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $this->assertTrue(true);
-    }
-
     public function testsRegistersSuccessfully()
     {
+        Notification::fake();
+
         $payload = [
             'name' => 'John',
             'email' => 'john@toptal.com',
@@ -28,7 +24,7 @@ class RegisterTest extends TestCase
         ];
 
         $this->json('post', '/api/register', $payload)
-            ->assertStatus(201)
+            ->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
                     'id',
@@ -38,7 +34,39 @@ class RegisterTest extends TestCase
                     'updated_at',
                     'api_token',
                 ],
-            ]);;
+            ]);
+
+        Notification::assertSentTo(
+            User::latest()->first(),
+            VerifyUserMail::class
+        );
+    }
+
+    public function testRegistersAndVerifiedSuccessfully()
+    {
+        $user = factory(User::class)->create([
+            'email'    => 'testlogin@user.com',
+            'password' => bcrypt('toptal123'),
+        ]);
+
+        $verifyUser = factory(VerifyUser::class)->create([
+           'user_id' => $user->id,
+        ]);
+
+        $verifyUserData = [
+            'token' => $verifyUser->token
+        ];
+
+        $response = $this->json('post', '/api/user/verify', $verifyUserData);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'status', 'message'
+            ]);
+
+        $result = json_decode($response->getContent(), true);
+
+        $this->assertEquals(true, $result['status']);
     }
 
     public function testsRequiresPasswordEmailAndName()
