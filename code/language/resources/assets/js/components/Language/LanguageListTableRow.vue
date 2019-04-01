@@ -72,7 +72,7 @@
             content: 'Create Fail',
           };
 
-          http.post('api/language', langData)
+          http.post('/api/language', langData)
             .then((response) => {
 
               if (response.data.data != null) {
@@ -94,7 +94,7 @@
             content: 'Update Fail',
           };
 
-          http.put(`api/language/${langData.lang_id}`, langData)
+          http.put(`/api/language/${langData.lang_id}`, langData)
             .then((response) => {
 
               if (response.data.data.status) {

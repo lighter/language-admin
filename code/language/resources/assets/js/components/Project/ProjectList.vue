@@ -50,7 +50,7 @@
     },
     methods: {
       getUserProjects() {
-        http.get('api/user_projects')
+        http.get('/api/user_projects')
           .then((response) => {
             this.userProjects = response.data.data;
           });

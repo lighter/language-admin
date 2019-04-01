@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Middleware\EncryptCookies;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Session\Middleware\StartSession;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,17 @@ Route::post('password/create', 'Auth\ResetPasswordController@create');
 Route::get('password/find/{token}', 'Auth\ResetPasswordController@find');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::post('user/verify', 'Auth\RegisterController@verifyUser');
+
+Route::post('auth/{driver}', 'Auth\OAuthController@redirectToProvider')->middleware(
+    EncryptCookies::class,
+    AddQueuedCookiesToResponse::class,
+    StartSession::class
+);
+Route::post('auth/callback/{token}', 'Auth\OAuthController@authLogin')->middleware(
+    EncryptCookies::class,
+    AddQueuedCookiesToResponse::class,
+    StartSession::class
+);
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();

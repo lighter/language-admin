@@ -91,7 +91,7 @@
     },
     methods: {
       getUserProjectOwner(page = 1, pageSize = 10) {
-        http.post('api/project/owner', {
+        http.post('/api/project/owner', {
           'projectId': this.$route.params.id,
           'page': page,
           'pageSize': pageSize,
@@ -103,7 +103,7 @@
           });
       },
       inviteUser() {
-        http.post('api/project/invite_user', {
+        http.post('/api/project/invite_user', {
           lang: this.$route.params.lang,
           email: this.inviteEmail,
           id: this.$route.params.id,
@@ -142,7 +142,7 @@
           write: owner.pivot.write,
         };
 
-        http.post('api/project/owner_setting', ownerData)
+        http.post('/api/project/owner_setting', ownerData)
           .then(response => {
 
             if (response.data.status) {

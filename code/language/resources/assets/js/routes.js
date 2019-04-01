@@ -22,9 +22,10 @@ import NotFound from '#/components/NotFound';
 import Logout from '#/components/Logout';
 import {i18n} from "#/i18n";
 import store from "#/components/store";
-
+import OAuthCallback from "#/OAuthCallback";
 
 const routes = [
+  { path: '/oauth/:driver/:token', component: OAuthCallback, name: 'oauth_callback'},
   { path: '/:lang/reset_pass/:code', component: ResetPassword, name: 'reset_pass'},
   { path: '/:lang/logout', component: Logout, name: 'logout'},
   { path: '/:lang/login', component: Login, name: 'login'},
@@ -56,10 +57,17 @@ const routes = [
   { path: '*', component: NotFound },
 ];
 
-const router = new VueRouter({ routes});
+const router = new VueRouter({
+  routes,
+  mode: 'history',
+  base: '/',
+  fallback: true
+});
 
 router.beforeEach((to, from, next) => {
   const lang = to.params.lang;
+
+  if (to.name == 'oauth_callback') return next();
 
   if (!['en', 'zh_tw'].includes(lang)) return next('en');
   else i18n.locale = lang;
@@ -76,7 +84,6 @@ router.beforeEach((to, from, next) => {
     next({ name: 'project_list', params: {lang} })
     return
   }
-
 
   return next();
 });

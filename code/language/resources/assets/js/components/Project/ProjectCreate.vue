@@ -100,7 +100,7 @@
           content: 'Create Fail',
         };
 
-        http.post('api/project', {
+        http.post('/api/project', {
           name: this.name,
           public: this.public,
           language: this.selectedLanguage

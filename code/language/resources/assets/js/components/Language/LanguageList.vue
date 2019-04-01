@@ -72,7 +72,7 @@
         });
       },
       deleteProjectLanguage(index, lang_id) {
-        http.delete(`api/language/${lang_id}`)
+        http.delete(`/api/language/${lang_id}`)
           .then((response) => {
             console.log(response);
 

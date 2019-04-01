@@ -38,4 +38,6 @@ export default {
   "join_project_failed": "請再發送一次邀請加入專案 mail",
   "Yes": "是",
   "No": "否",
+  "Logout": "登出",
+  "SignInWithGithub": "使用 Github 登入",
 }

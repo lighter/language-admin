@@ -79,12 +79,12 @@ class RegisterController extends Controller
 
         $lang = $data['lang'] ?? 'en';
 
-        VerifyUser::create([
-            'user_id' => $user->id,
-            'token'   => str_random(40),
-        ]);
+//        VerifyUser::create([
+//            'user_id' => $user->id,
+//            'token'   => str_random(40),
+//        ]);
 
-        $user->notify(new VerifyUserMail($user, $lang));
+//        $user->notify(new VerifyUserMail($user, $lang));
 
         return $user;
     }

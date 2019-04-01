@@ -10,12 +10,12 @@
 
                 <div class="navbar-dropdown" v-if="!loginStatus">
                     <router-link to="/" class="navbar-item">Home</router-link>
-                    <router-link :to="{path: '/' + $i18n.locale + '/login'}" class="navbar-item">Login</router-link>
-                    <router-link :to="{path: '/' + $i18n.locale + '/register'}" class="navbar-item">Register</router-link>
+                    <router-link :to="{path: '/' + $i18n.locale + '/login'}" class="navbar-item">{{ $t('Sign_in') }}</router-link>
+                    <router-link :to="{path: '/' + $i18n.locale + '/register'}" class="navbar-item">{{ $t('Sign_up') }}</router-link>
                 </div>
 
                 <div class="navbar-dropdown" v-else>
-                    <router-link :to="{path: '/' + $i18n.locale + '/logout'}" class="navbar-item">Logout</router-link>
+                    <router-link :to="{path: '/' + $i18n.locale + '/logout'}" class="navbar-item">{{ $t('Logout') }}</router-link>
                 </div>
 
             </div>

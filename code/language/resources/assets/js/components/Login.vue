@@ -17,16 +17,27 @@
                             <form>
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input is-large" type="email" :placeholder="$t('Email_address')" autofocus="" v-model="email">
+                                        <input class="input is-large" type="email" :placeholder="$t('Email_address')"
+                                               autofocus="" v-model="email">
                                     </div>
                                 </div>
 
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input is-large" type="password" :placeholder="$t('Password')" v-model="password">
+                                        <input class="input is-large" type="password" :placeholder="$t('Password')"
+                                               v-model="password">
                                     </div>
                                 </div>
-                                <button class="button is-block is-info is-large is-fullwidth" @click.prevent="login">{{ $t('Sign_in') }}</button>
+                                <div class="field">
+                                    <button class="button is-block is-light is-large is-fullwidth"
+                                            @click.prevent="login">{{ $t('Sign_in') }}
+                                    </button>
+                                </div>
+                                <div class="field">
+                                    <button class="button is-block is-dark is-large is-fullwidth"
+                                            @click.prevent="githubLogin">{{ $t('SignInWithGithub') }}
+                                    </button>
+                                </div>
                             </form>
                         </div>
                         <p class="has-text-grey">
@@ -43,6 +54,7 @@
 
 <script>
   import auth from '#/components/Auth/auth';
+  import http from '#/http';
   import Navbar from '#/components/layout/Navbar';
   import LanguageSwitch from '#/components/layout/LanguageSwitch';
 
@@ -69,7 +81,13 @@
           if (status) this.$router.push({ name: 'project_list', params: this.$i18n.locale })
           else this.$alertmodal.show(params)
         });
-
+      },
+      githubLogin() {
+        http.post('/api/auth/github')
+          .then(response => {
+            console.log(response);
+            window.location = response.data.url;
+          })
       }
     }
   }

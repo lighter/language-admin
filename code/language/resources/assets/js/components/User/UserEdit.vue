@@ -155,7 +155,7 @@
           content: 'Update Fail',
         };
 
-        http.put(`api/users/${(this.$route.params.id)}`, userData)
+        http.put(`/api/users/${(this.$route.params.id)}`, userData)
           .then((response) => {
             if (response.data.data.status) this.$alertmodal.show(updateSuccessParams);
             else this.$alertmodal.show(updateFailParams);

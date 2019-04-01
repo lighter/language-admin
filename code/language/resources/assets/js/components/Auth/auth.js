@@ -1,23 +1,30 @@
 import store from "#/components/store";
 import {setCookie} from '#/util/cookie';
 
+const axiosHttp = axios.create ({
+  baseURL: process.env.VUE_APP_ROOT_API,
+  timeout: 60000,
+  headers: {'Content-Type': 'application/json'},
+});
+
 export default {
 
   register(context, name, email, password, password_confirmation, lang) {
-    return axios.post('api/register', { name, email, password, password_confirmation, lang })
+    return axiosHttp.post('/api/register', { name, email, password, password_confirmation, lang })
       .then(response => {
+        console.log(response);
         if ('data' in response.data) {
-          return {status: true};
+          return { status: true };
         }
       })
       .catch(function (error) {
-        console.log(error.response);
-        return {status: false, errors: error.response.data.errors};
+        console.log(error);
+        return { status: false, errors: error.response.data.errors };
       });
   },
 
   login(email, password) {
-    return axios.post('api/login', { email, password })
+    return axiosHttp.post('/api/login', { email, password })
       .then(response => {
 
         if ('data' in response.data) {
@@ -37,7 +44,7 @@ export default {
   },
 
   forgot_pass(email) {
-    return axios.post('api/password/create', {email})
+    return axiosHttp.post('api/password/create', { email })
       .then(response => {
         return response.data;
       })

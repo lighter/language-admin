@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
 
-                                <button class="button is-block is-info is-large is-fullwidth"
+                                <button class="button is-block is-light is-large is-fullwidth"
                                         @click.prevent="reset_pass">
                                     {{ $t('Send') }}
                                 </button>
@@ -79,7 +79,7 @@
           content: 'Somthing is wrong',
         };
 
-        http.post('api/password/reset', {
+        http.post('/api/password/reset', {
           email: this.email,
           password: this.password,
           password_confirmation: this.password_confirmation,
@@ -99,7 +99,7 @@
           content: 'Somthing is wrong',
         };
 
-        http.get('api/password/find/' + this.code)
+        http.get('/api/password/find/' + this.code)
           .then((response) => {
             if (response.data.status === true) {
               let data = response.data.data;

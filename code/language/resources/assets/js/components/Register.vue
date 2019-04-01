@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
 
-                                <button class="button is-block is-info is-large is-fullwidth" @click.prevent="register">
+                                <button class="button is-block is-light is-large is-fullwidth" @click.prevent="register">
                                     {{ $t('Sign_up') }}
                                 </button>
                             </form>

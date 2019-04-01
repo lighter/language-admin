@@ -38,4 +38,6 @@ export default {
   "join_project_failed": "Please resend invite join project mail",
   "Yes": "Yes",
   "No": "No",
+  "Logout": "Logout",
+  "SignInWithGithub": "Sign in with Github",
 }

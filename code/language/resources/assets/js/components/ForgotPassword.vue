@@ -23,7 +23,7 @@
                                     </div>
                                 </div>
 
-                                <button class="button is-block is-info is-large is-fullwidth"
+                                <button class="button is-block is-light is-large is-fullwidth"
                                         @click.prevent="forgot_pass">
                                     {{ $t('Send') }}
                                 </button>

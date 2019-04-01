@@ -116,7 +116,7 @@
           content: 'Update Fail',
         };
 
-        http.put(`api/project/${this.$route.params.id}`, {
+        http.put(`/api/project/${this.$route.params.id}`, {
           name: this.name,
           public: this.public,
           language: this.selectedLanguage

@@ -56,7 +56,7 @@
     },
     methods: {
       verify_user() {
-        http.post('api/user/verify', {token: this.code})
+        http.post('/api/user/verify', {token: this.code})
           .then((response) => {
             let data = response.data;
             this.verify_message = data.message;
