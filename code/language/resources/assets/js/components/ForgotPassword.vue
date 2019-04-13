@@ -71,6 +71,7 @@
           .then(data => {
             if (data.status === true) {
               this.$alertmodal.show(forgotPasswordSuccessParams);
+              this.email = '';
             } else {
               this.$alertmodal.show(forgotPasswordFailParams);
             }

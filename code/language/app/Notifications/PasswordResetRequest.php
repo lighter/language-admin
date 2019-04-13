@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\App;
 
 class PasswordResetRequest extends Notification implements ShouldQueue
 {
@@ -47,7 +48,7 @@ class PasswordResetRequest extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $url = url('/#/' . $this->language . '/reset_pass/' . $this->token);
+        $url = url('/' . $this->language . '/reset_pass/' . $this->token);
 
         return (new MailMessage)
             ->line('You are receiving this email because we received a password reset request for your account.')

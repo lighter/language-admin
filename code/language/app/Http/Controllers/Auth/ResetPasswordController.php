@@ -67,8 +67,9 @@ class ResetPasswordController extends Controller
 
         if (!$user) {
             return response()->json([
+                'status'  => false,
                 'message' => 'We can\'t find a user with that e-mail address.',
-            ], 404);
+            ], 200);
         }
 
         $passwordReset = PasswordReset::updateOrCreate(
@@ -84,6 +85,7 @@ class ResetPasswordController extends Controller
                 new PasswordResetRequest($passwordReset->token)
             );
         }
+
         return response()->json(['status' => true]);
     }
 
@@ -101,8 +103,9 @@ class ResetPasswordController extends Controller
             ->first();
         if (!$passwordReset) {
             return response()->json([
+                'status'  => false,
                 'message' => 'This password reset token is invalid.',
-            ], 404);
+            ], 200);
         }
         if (Carbon::parse($passwordReset->updated_at)->addMinutes(720)->isPast()) {
             $passwordReset->delete();
@@ -129,29 +132,30 @@ class ResetPasswordController extends Controller
             'password' => 'required|string|confirmed',
             'token'    => 'required|string',
         ]);
-        $passwordReset = PasswordReset::where([
-            ['token', $request->token],
-            ['email', $request->email],
-        ])->first();
+        $passwordReset = PasswordReset::where(
+            'token', $request->token
+        )->first();
 
         if (!$passwordReset) {
             return response()->json([
+                'status'  => false,
                 'message' => 'This password reset token is invalid.',
-            ], 404);
+            ], 200);
         }
 
         $user = $this->userRepository->getUserByEmail($request->email);
 
         if (!$user) {
             return response()->json([
-                'message' => 'We can\'t find a user with that e - mail address . ',
-            ], 404);
+                'status'  => false,
+                'message' => 'We can\'t find a user with that email address.',
+            ], 200);
         }
 
         $user->password = bcrypt($request->password);
         $user->save();
         $passwordReset->delete();
-        $user->notify(new PasswordResetSuccess($passwordReset));
+        $user->notify(new PasswordResetSuccess());
 
         return response()->json(['status' => true]);
     }

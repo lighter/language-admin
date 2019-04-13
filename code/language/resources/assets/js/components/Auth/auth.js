@@ -44,7 +44,7 @@ export default {
   },
 
   forgot_pass(email) {
-    return axiosHttp.post('api/password/create', { email })
+    return axiosHttp.post('/api/password/create', { email })
       .then(response => {
         return response.data;
       })
