@@ -11,9 +11,6 @@
                     <div class="column is-4 is-offset-4">
                         <h3 class="title has-text-grey">{{ $t('Sign_in') }}</h3>
                         <div class="box">
-                            <figure class="avatar">
-                                <img src="https://placehold.it/128x128">
-                            </figure>
                             <form>
                                 <div class="field">
                                     <div class="control">
@@ -109,10 +106,6 @@
     .hero.is-success .nav {
         -webkit-box-shadow: none;
         box-shadow: none;
-    }
-
-    .box {
-        margin-top: 5rem;
     }
 
     .avatar {
