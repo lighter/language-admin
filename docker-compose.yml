@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
     php:
         build: ./php/
@@ -27,8 +27,6 @@ services:
             - ./nginx/log:/var/log/nginx:rw
         links:
             - php:php
-        volumes_from:
-            - php
         ports:
             - 8888:80
         restart: always
