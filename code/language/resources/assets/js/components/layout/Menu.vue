@@ -17,7 +17,10 @@
 
 <style scoped>
     #div-menu {
+        position: fixed;
         border-right: 3px solid  rgba(10, 10, 10, 0.1);
         margin-right: 11px;
+        top: 3.5em;
+        bottom: 0;
     }
 </style>

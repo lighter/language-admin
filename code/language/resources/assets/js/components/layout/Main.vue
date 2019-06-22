@@ -21,11 +21,11 @@
             </div>
         </Navbar>
 
-        <div class="container">
+        <div class="container is-fluid">
             <div class="columns is-desktop is-gapless">
                 <Menu></Menu>
 
-                <div class="column is-11">
+                <div class="column is-11" id="div-container">
                     <router-view></router-view>
                 </div>
             </div>
@@ -64,5 +64,7 @@
 </script>
 
 <style scoped>
-
+    div#div-container {
+        margin-left: 9.5%;
+    }
 </style>
