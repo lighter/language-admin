@@ -25,6 +25,7 @@ services:
         build: ./nginx/
         volumes:
             - ./nginx/log:/var/log/nginx:rw
+            - ./code/language:/var/www/html
         links:
             - php:php
         ports:
