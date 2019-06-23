@@ -21,3 +21,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
       }
     }
   });
+
+
+// images
+mix.copy('resources/images', 'public/images');
