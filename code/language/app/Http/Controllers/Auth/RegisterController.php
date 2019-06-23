@@ -72,22 +72,41 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $verified = is_local() ? 1 : 0;
+
         $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
+            'verified' => $verified,
         ]);
 
         $lang = $data['lang'] ?? 'en';
 
-        VerifyUser::create([
-            'user_id' => $user->id,
-            'token'   => str_random(40),
-        ]);
+        $this->_createVerifyUser($user);
 
         $user->notify(new VerifyUserMail($user, $lang));
 
         return $user;
+    }
+
+    /**
+     * @param $user
+     *
+     * @return bool
+     */
+    private function _createVerifyUser($user)
+    {
+        if ($user) {
+            $verifyUser = VerifyUser::create([
+                'user_id' => $user->id,
+                'token'   => str_random(40),
+            ]);
+
+            return $verifyUser ? true : false;
+        }
+
+        return false;
     }
 
     /**

@@ -1,7 +1,8 @@
 import {getCookie} from "#/util/cookie";
+import {API_BASE_URL} from "#/config";
 
 const http = axios.create ({
-  baseURL: process.env.VUE_APP_ROOT_API,
+  baseURL: API_BASE_URL,
   timeout: 60000,
   headers: {'Content-Type': 'application/json'},
 });

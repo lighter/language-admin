@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
 class ResponseMacroServiceProvider extends ServiceProvider
@@ -29,15 +29,22 @@ class ResponseMacroServiceProvider extends ServiceProvider
 
             return Response::make($response_information);
         });
-    }
 
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
+
+        Response::macro('lang_response', function (array $data = []) {
+
+            if (array_key_exists('errors', $data)) {
+                $data['errors'] = is_array($data['errors']) ? $data['errors'] : [$data['errors']];
+            }
+
+            $self_response_information = [
+                'status_code' => $data['code'] ?? 200,
+                'status'      => $data['status'] ?? false,
+                'body'        => $data['data'] ?? [],
+                'errors'      => $data['errors'] ?? [],
+            ];
+
+            return Response::make($self_response_information);
+        });
     }
 }

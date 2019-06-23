@@ -162,6 +162,13 @@ return [
 
         App\Providers\ResponseMacroServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+
+        /*
+         * self provider
+         */
+
+        // LanguageHelper
+        App\Providers\HelperServiceProvider::class,
     ],
 
     /*

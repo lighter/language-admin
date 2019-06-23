@@ -1,10 +1,32 @@
 import store from "#/components/store";
 import {setCookie} from '#/util/cookie';
+import {API_BASE_URL} from "#/config";
+// import http from "../../http";
 
-const axiosHttp = axios.create ({
-  baseURL: process.env.VUE_APP_ROOT_API,
+const axiosHttp = axios.create({
+  baseURL: API_BASE_URL,
   timeout: 60000,
-  headers: {'Content-Type': 'application/json'},
+  headers: { 'Content-Type': 'application/json' },
+});
+
+axiosHttp.interceptors.request.use(
+  function (config) {
+    window.Vue.prototype.$loading.show();
+
+    return config;
+  },
+  function (error) {
+    window.Vue.prototype.$loading.close();
+    return Promise.reject(error);
+  }
+);
+
+axiosHttp.interceptors.response.use(function (response) {
+  window.Vue.prototype.$loading.close();
+  return response;
+}, function (error) {
+  window.Vue.prototype.$loading.close();
+  return Promise.reject(error);
 });
 
 export default {
