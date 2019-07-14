@@ -1,7 +1,6 @@
 import store from "#/components/store";
 import {setCookie} from '#/util/cookie';
 import {API_BASE_URL} from "#/config";
-// import http from "../../http";
 
 const axiosHttp = axios.create({
   baseURL: API_BASE_URL,
@@ -51,6 +50,7 @@ export default {
 
         if ('data' in response.data) {
           store.commit('loginUser');
+          store.state.user = response.data.data.name;
 
           // localStorage.setItem('token', response.data.data.api_token);
 

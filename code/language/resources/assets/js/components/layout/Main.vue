@@ -6,7 +6,7 @@
             <LanguageSwitch></LanguageSwitch>
 
             <div class="navbar-item has-dropdown" v-bind:class="{ 'is-active': isActive }" @mouseover="showAccountDropDown" @mouseout="hiddenAccountDropDown">
-                <a href="#" class="navbar-link">{{ $t('Account') }}</a>
+                <a href="#" class="navbar-link">{{ user }}</a>
 
                 <div class="navbar-dropdown" v-if="!loginStatus">
                     <router-link to="/" class="navbar-item">Home</router-link>
@@ -49,7 +49,8 @@
     data() {
       return {
         isActive: false,
-        loginStatus: store.state.isLoggedIn
+        loginStatus: store.state.isLoggedIn,
+        user: store.state.user,
       };
     },
     methods: {

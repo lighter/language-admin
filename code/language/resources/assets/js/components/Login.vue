@@ -63,8 +63,8 @@
     },
     data() {
       return {
-        email: null,
-        password: null,
+        email: 'test@test.com',
+        password: '123456',
       };
     },
     methods: {

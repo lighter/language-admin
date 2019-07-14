@@ -2,6 +2,8 @@
 
     <div id="div-user-project-languages" class="div-table-list">
 
+        <h2 class="title is-2">{{ $t('ProjectName') }} : {{ project.name }}</h2>
+
         <table id="table-user-project-languages" class="table is-striped is-fullwidth">
             <thead>
             <tr>
@@ -45,6 +47,7 @@
       return {
         userProjectLanguages: [],
         projectLanguages: [],
+        project: null,
       }
     },
     methods: {
@@ -54,6 +57,7 @@
             let responseData = response.data;
             this.projectLanguages = JSON.parse(responseData.project.language);
             this.userProjectLanguages = responseData.data;
+            this.project = responseData.project;
           });
       },
       createLang() {

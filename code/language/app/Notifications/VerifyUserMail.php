@@ -49,7 +49,7 @@ class VerifyUserMail extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $url = url("/#/{$this->language}/user/verify/{$this->user->verifyUser->token}");
+        $url = url("/{$this->language}/user/verify/{$this->user->verifyUser->token}");
 
         return (new MailMessage)
             ->line(trans('verifyUserMail.check_email', ['email_id' => $this->user->email]))

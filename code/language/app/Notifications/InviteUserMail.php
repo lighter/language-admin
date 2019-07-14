@@ -51,7 +51,7 @@ class InviteUserMail extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $url = url("/#/{$this->language}/project/invite/{$this->token}");
+        $url = url("/{$this->language}/project/invite/{$this->token}");
 
         return (new MailMessage)
             ->line(trans('inviteUserMail.join_project'))
