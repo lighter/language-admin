@@ -2,19 +2,21 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {getCookie} from '#/util/cookie';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     isLoggedIn: !!getCookie('token'), // !!localStorage.getItem('token')
-    user: null,
+    userName: getCookie('userName'),
   },
   mutations: {
-    loginUser(state) {
-      state.isLoggedIn = true
+    loginUser(state, user) {
+      state.isLoggedIn = true;
+      state.userName = user.name;
     },
     logoutUser(state) {
-      state.isLoggedIn = false
+      state.isLoggedIn = false;
+      state.userName = null;
     },
   }
 });

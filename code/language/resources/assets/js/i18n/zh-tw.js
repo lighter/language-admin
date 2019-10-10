@@ -40,4 +40,5 @@ export default {
   "No": "否",
   "Logout": "登出",
   "SignInWithGithub": "使用 Github 登入",
+  "Setting": "設定",
 }

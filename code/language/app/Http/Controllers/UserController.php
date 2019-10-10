@@ -75,9 +75,16 @@ class UserController extends Controller
      */
     public function getUser($userId)
     {
-        $user = $this->userRepository->getUser($userId);
+        $authUser = \Auth::user();
 
-        return response()->json(['data' => $user], Response::HTTP_OK);
+        if ($authUser->id == $userId) {
+
+            $user = $this->userRepository->getUser($userId);
+
+            return response()->json(['data' => $user], Response::HTTP_OK);
+        }
+
+        return response()->json(['data' => null], Response::HTTP_OK);
     }
 
     /**

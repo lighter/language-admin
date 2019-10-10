@@ -40,4 +40,5 @@ export default {
   "No": "No",
   "Logout": "Logout",
   "SignInWithGithub": "Sign in with Github",
+  "Setting": "Setting",
 }

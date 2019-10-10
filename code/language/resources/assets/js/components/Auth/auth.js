@@ -49,13 +49,12 @@ export default {
       .then(response => {
 
         if ('data' in response.data) {
-          store.commit('loginUser');
-          store.state.user = response.data.data.name;
-
-          // localStorage.setItem('token', response.data.data.api_token);
+          store.commit('loginUser', response.data.data);
 
           let expiredays = 1;
           setCookie('token', response.data.data.api_token, expiredays);
+          setCookie('userName', response.data.data.name, expiredays);
+          setCookie('uid', response.data.data.id, expiredays);
 
           return true;
         }

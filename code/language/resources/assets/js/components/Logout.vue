@@ -10,6 +10,8 @@
     name: "Logout",
     mounted() {
       delCookie('token');
+      delCookie('userName');
+      delCookie('uid');
       store.commit('logoutUser');
       this.$router.push({name: 'login', params: this.$i18n.locale });
     }

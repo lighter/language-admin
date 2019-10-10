@@ -6,7 +6,7 @@
             <LanguageSwitch></LanguageSwitch>
 
             <div class="navbar-item has-dropdown" v-bind:class="{ 'is-active': isActive }" @mouseover="showAccountDropDown" @mouseout="hiddenAccountDropDown">
-                <a href="#" class="navbar-link">{{ user }}</a>
+                <a href="#" class="navbar-link">{{ userName }}</a>
 
                 <div class="navbar-dropdown" v-if="!loginStatus">
                     <router-link to="/" class="navbar-item">Home</router-link>
@@ -15,6 +15,7 @@
                 </div>
 
                 <div class="navbar-dropdown" v-else>
+                    <router-link :to="{path: '/' + $i18n.locale + '/user/' + uid + '/edit' }" class="navbar-item">{{ $t('Setting') }}</router-link>
                     <router-link :to="{path: '/' + $i18n.locale + '/logout'}" class="navbar-item">{{ $t('Logout') }}</router-link>
                 </div>
 
@@ -39,6 +40,7 @@
   import Menu from '#/components/layout/Menu';
   import LanguageSwitch from '#/components/layout/LanguageSwitch';
   import store from '#/components/store';
+  import {getCookie} from '#/util/cookie';
 
   export default {
     components: {
@@ -50,7 +52,8 @@
       return {
         isActive: false,
         loginStatus: store.state.isLoggedIn,
-        user: store.state.user,
+        userName: store.state.userName,
+        uid: getCookie('uid'),
       };
     },
     methods: {
