@@ -1,6 +1,7 @@
 version: '3'
 services:
     php:
+        image: language-php:v0.0.1
         build: ./php/
         volumes:
             - ./code/language:/var/www/html
@@ -13,6 +14,7 @@ services:
             PHP_IDE_CONFIG: "serverName=language.develop.com"
         restart: always
     postgres:
+        image: language-postgres:v0.0.1
         build: ./postgres/
         environment:
           - POSTGRES_PASSWORD=U2F77NbTyytwoCUVkpFmDs7TJDCkUnrPUMspDanAM2ywEFuZPszYEuwLyEvrvnJr
@@ -22,6 +24,7 @@ services:
           - 5433:5432
         restart: always
     nginx:
+        image: language-nginx:v0.0.1
         build: ./nginx/
         volumes:
             - ./nginx/log:/var/log/nginx:rw
@@ -32,6 +35,7 @@ services:
             - 8888:80
         restart: always
     redis:
+        image: language-redis:v0.0.1
         build: ./redis/
         ports:
           - 7369:6379

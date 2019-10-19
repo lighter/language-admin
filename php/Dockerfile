@@ -1,6 +1,6 @@
-FROM php:7.1-fpm
+FROM php:7.2-fpm-stretch
 
-COPY ./php7.1/php.ini /usr/local/etc/php/
+COPY ./php7.2/php.ini /usr/local/etc/php/
 
 RUN mkdir -p /var/log/php_log
 
@@ -13,11 +13,15 @@ RUN apt-get update \
     libsqlite3-dev \
     vim \
 
+    # iconv
+    && docker-php-ext-install -j$(nproc) iconv \
+
     # mcrypt
-    && docker-php-ext-install -j$(nproc) iconv mcrypt \
+    && pecl install mcrypt-1.0.1 \
+    && docker-php-ext-enable mcrypt \
 
     # redis
-    && pecl install -o -f redis \
+    && pecl install -o -f redis-4.3.0 \
     && docker-php-ext-enable redis\
 
     # pgsql
@@ -38,3 +42,6 @@ RUN apt-get update \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/xdebug.ini
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*

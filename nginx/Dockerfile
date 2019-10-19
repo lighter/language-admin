@@ -5,3 +5,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends vim htop procps
 ADD ./nginx.conf /etc/nginx/nginx.conf
 
 COPY ./default.conf /etc/nginx/conf.d/default.conf
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
